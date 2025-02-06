@@ -1,0 +1,33 @@
+/* Extra Small Devices (Phones) */ 
+@media (max-width: 576px) {
+    .d-phone{ display: block; }
+    .d-desktop{ display: none; }
+}
+
+/* Small Devices (Tablets, 7-inch screens) */
+@media (min-width: 577px) and (max-width: 768px) {
+    .d-phone{ display: none; }
+    .d-tab{ display: block; }
+    .d-desktop{ display: none; }
+}
+
+/* Medium Devices (Tablets, iPads, 10-inch screens) */
+@media (min-width: 769px) and (max-width: 992px) {
+    .d-phone{ display: none; }
+    .d-tab{ display: block; }
+    .d-desktop{ display: none; }
+}
+
+/* Large Devices (Laptops, Desktops) */
+@media (min-width: 993px) and (max-width: 1200px) {
+    .d-phone{ display: none; }  
+    .d-tab{ display: none; } 
+    .d-desktop{ display: block; }
+}
+
+/* Extra Large Devices (Big Screens, TVs, 4K) */
+@media (min-width: 1201px) {
+    .d-phone{ display: none; }
+    .d-tab{ display: none; }
+    .d-desktop{ display: block; }
+}

@@ -6,10 +6,8 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
-
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\HomeController;
 
 Route::get('/admin', function () {
     return redirect()->route('admin.login');
@@ -45,4 +43,9 @@ Route::name('admin.')->group(function () {
 
     });
 
+});
+
+Route::name('frontend.')->group(function () {
+    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 });

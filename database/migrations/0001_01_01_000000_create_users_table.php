@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('fcm')->nullable();
             $table->string('password')->nullable();
             $table->string('status')->nullable(false);
+            $table->text('custom')->nullable();
             $table->timestamps();
         });
 
