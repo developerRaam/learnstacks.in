@@ -5,6 +5,7 @@ use App\Http\Middleware\LoginMiddleware;
 use App\Http\Middleware\LogoutMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,5 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+
+        // handle 404 page
+        $exceptions->render(function (HttpException $error) {
+            return response()->view('frontend.errors.404', ["error" =>$error]);
+        });
     })->create();

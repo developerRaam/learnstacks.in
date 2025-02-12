@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6 col-md-3">
-                <a href="/"><img height="60" width="100" src="{{ asset('logo.JPG') }}" alt="ez lifestyle"></a>
+                <a href="/"><img height="60" width="100" src="{{ asset('storage') .'/'. app('settings')['site_logo'] }}" alt="Online Notes"></a>
             </div>
 
             <!-- For desktop -->
@@ -15,10 +15,10 @@
                 <div class="mt-3 d-desktop d-phone">
                     <ul class="list-unstyled text-white d-flex justify-content-end mb-0">
                         <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">Home</a></li>
-                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">Laravel</a></li>
-                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">CSS</a></li>
-                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">JavaScript</a></li>
-                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">About Us</a></li>
+                        @foreach ($categories as $category)
+                            <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.post', $category->slug) }}">{{ $category->name }}</a></li>
+                        @endforeach
+                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
                     </ul>
                 </div>
                 <div class="d-phone d-tab text-end h-100">

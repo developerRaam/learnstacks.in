@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -21,27 +22,32 @@ class AuthController extends Controller
 
 
     public function login(Request $request){
-        $user = User::where('email', $request->request->get('email'))->first();
+        // Validate the input fields
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if ($user && $user->role == 'Admin') {
-            $password = $request->request->get('password');
-            $hashedPassword = Hash::check($password, $user->password);
-            if($hashedPassword){
-                $request->session()->put('isUser', $user->id);
-                $request->session()->put('userName',$user->name);
-                return redirect()->route('admin.dashboard');
-            }else{
-                return redirect()->route('admin.login')->with('error', 'Username and password do not match.');
+        // Attempt to log in the user
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+
+            $user = Auth::user();
+
+            if ($user->role === 'Admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Login successful.');
+            } else {
+                Auth::logout();
+                return redirect()->route('admin.login')->with('error', 'Access denied.');
             }
-        } else {
-            return redirect()->route('admin.login')->with('error', 'Username and password do not match.');
         }
+
+        return redirect()->route('admin.login')->with('error', 'Invalid email or password.');
     }
 
 
     public function logout(){
-        session()->forget('isUser');
-        session()->forget('userName');
+        Auth::logout();
+        Session::flush();
         return redirect()->route('admin.login')->with('success', 'Logout');
     }
 

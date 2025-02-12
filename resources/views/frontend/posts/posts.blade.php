@@ -1,14 +1,14 @@
 @extends('frontend.common.base')
 
-@push('setTitle') Online Notes @endpush
+@push('setTitle')
+    {{ $category }}
+@endpush
 
 @section('content')
 
-    @include('frontend.common.carousel')
-
-    <div class="container mt-5">
-        <div class="row g-4 justify-content-center">
-            @foreach ($posts as $post)
+    <div class="container mt-4">
+        <div class="row g-4 justify-content-start">
+            @forelse ($posts as $post)
                 <div class="col-md-4">
                     <div class="card custom-card">
                         @if (isset($post->featured_image))
@@ -19,8 +19,10 @@
                             <a href="{{ route('frontend.postShow', $post->slug) }}" class="btn btn-custom">Learn More</a>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                </div>    
+            @empty
+                <p class="text-center fs-4">Post Not Found</p>
+            @endforelse
         </div>
     </div>
 

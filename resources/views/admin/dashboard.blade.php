@@ -6,14 +6,13 @@
 
 @section('content')
 
-    @include('admin.common.alert')
-
     <section class="container-fluid px-0">
         <div class="row">
             <div class="col-sm-2 p-0">
                 @include('admin.common.left-sidebar')
             </div>
             <div class="col-sm-10 p-0">
+                @include('admin.common.alert')
                 <div class="m-4">
                     <div class="admin-title">
                         <h2>Dashboard</h2>

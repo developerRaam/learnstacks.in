@@ -2,12 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Frontend\CommentController;
+use App\Http\Controllers\Frontend\PageController as FrontendPageController;
+use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 
 Route::get('/admin', function () {
     return redirect()->route('admin.login');
@@ -41,11 +46,25 @@ Route::name('admin.')->group(function () {
         Route::get('change-password', [ProfileController::class,'changePassword'])->name('changePassword');
         Route::post('change-password', [ProfileController::class,'savePassword'])->name('savePassword');
 
+        Route::resource('posts', PostController::class)->name('index', 'posts');
+
+        Route::resource('pages', PageController::class)->name('index', 'pages');
+
+        Route::get('edit-setting', [SettingController::class,'edit'])->name('setting');
+        Route::post('update-setting', [SettingController::class,'update'])->name('updateSetting');
+
     });
 
 });
 
 Route::name('frontend.')->group(function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
-    Route::get('blog', [BlogController::class, 'blog'])->name('blog');
+    Route::get('posts/{catagory_slug}', [FrontendPostController::class, 'post'])->name('post');
+    Route::get('post/{slug}', [FrontendPostController::class, 'postShow'])->name('postShow');
+    Route::post('email-subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
+    
+    Route::get('get-comment/{post_id}', [CommentController::class, 'getComment'])->name('getComment');
+    Route::post('comment', [CommentController::class, 'comment'])->name('comment');
+
+    Route::get('{slug}', [FrontendPageController::class, 'page'])->name('page');
 });

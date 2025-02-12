@@ -130,7 +130,7 @@ class BannerController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'status' => 'nullable',
-            'image' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $validated['status'] = $validated['status'] ? true : false; 
