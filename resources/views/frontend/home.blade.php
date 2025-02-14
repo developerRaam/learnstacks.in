@@ -1,6 +1,6 @@
 @extends('frontend.common.base')
 
-@push('setTitle') Online Notes @endpush
+@push('setTitle') {{ app('settings')['site_name'] }} @endpush
 
 @section('content')
 

@@ -26,10 +26,10 @@
         <link rel="canonical" href="@stack('addCanonical')">
 
         <!-- Favicon -->
-        <link rel="icon" href="https://yourwebsite.com/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="{{ asset('logo.jpg') }}" type="image/x-icon">
 
         <!-- Alternative Language Versions (if applicable) -->
-        <link rel="alternate" hreflang="en" href="https://yourwebsite.com">
+        <link rel="alternate" hreflang="en" href="https://learnstacks.in">
 
         <!-- Article Meta Tags -->
         <meta property="article:published_time" content="@stack('addArticlePublishDate')">
@@ -53,7 +53,7 @@
                     "name": "@stack('addTitle')",
                     "logo": {
                         "@type": "ImageObject",
-                        "url": "https://yourwebsite.com/logo.png"
+                        "url": "https://learnstacks.in/logo.jpg"
                     }
                 },
                 "datePublished": "@stack('addArticlePublishDate')",

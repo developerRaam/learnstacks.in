@@ -113,6 +113,18 @@
                                     @enderror
                                 </div>
 
+                                <div class="col-md-8">
+                                    <label for="site_name">Site Name</label>
+                                    <input type="text" id="site_name" name="site_name" class="form-control p-2 mt-3" value="{{ old('site_name', $setting->site_name ?? '') }}" placeholder="Site Name"> 
+                                    @error('site_name')
+                                        <div class="errors">
+                                            <span class="text-danger">
+                                                {{$message}}
+                                            </span>
+                                        </div>
+                                    @enderror
+                                </div>
+
                                 <!-- Social Media setting -->
                                 <div class="col-12 mt-4">
                                     <h4 class="bg-secondary text-white p-2 px-2 fs-6 rounded">Social Media</h4>

@@ -31,6 +31,7 @@ class SettingController extends Controller
             'social_media_twitter_url' => null,
             'site_logo' => null,
             'site_description' => null,
+            'site_name' => null,
         ];
 
         $settings = Setting::all();
@@ -55,6 +56,7 @@ class SettingController extends Controller
             'social_media_twitter_url' => 'nullable|url',
             'site_logo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'site_description' => 'nullable',
+            'site_name' => 'nullable',
         ]);
 
         if ($request->hasFile('site_logo')) {

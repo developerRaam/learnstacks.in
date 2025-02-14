@@ -1,10 +1,31 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --bg-black: #0e0e10;
+    --text-grey: #cccccc;
+}
+
+body {
+    line-height: inherit;
+    overflow-x: hidden !important;
+    position: relative;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:"wdth" 100;
     background:#e6e5e5 !important;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
 }
+
 .dashboard{
     box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.1);
     border-radius: 7px;

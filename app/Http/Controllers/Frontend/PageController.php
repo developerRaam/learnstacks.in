@@ -10,6 +10,10 @@ class PageController extends Controller
 {
     public function page($slug){
         $data['page'] = Page::where('slug', $slug)->first();
+
+        if(!$data['page']){
+            abort(404, 'Page Not Found');
+        }
         return view('frontend.pages.page', $data);
     }
 }
