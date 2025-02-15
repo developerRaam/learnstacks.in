@@ -89,7 +89,7 @@
                                 <div class="col-md-4">
                                     <label for="site_logo">Site Logo</label>
                                     <div class="card p-2 mt-3" style="width: 12rem">
-                                        <img src="{{ isset($setting->site_logo) ? asset('storage/'.$setting->site_logo) : asset('not-image-available.png')}}" alt="Social Media Icon" id="imagePreview"  onclick="triggerFileUpload()" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
+                                        <img src="{{ isset($setting->site_logo) ? asset('storage/'.$setting->site_logo) : asset('not-image-available.png')}}" alt="Site Logo" id="imagePreview"  onclick="triggerFileUpload()" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
                                         <input type="file" name="site_logo" id="imageUpload" accept="image/*" style="display: none;" onchange="previewImage(event)">
                                         @error('site_logo')
                                             <div class="errors">

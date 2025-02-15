@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+// create new manager instance with desired driver
+use Intervention\Image\ImageManager;
 
 class PostController extends Controller
 {
@@ -96,7 +98,7 @@ class PostController extends Controller
             'title' => 'required',
             'short_description' => 'required',
             'description' => 'required',
-            'featured_image' => 'nullable',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'user_id' => 'nullable',
             'category_id' => 'nullable',
             'sub_category_id' => 'nullable',
@@ -107,20 +109,36 @@ class PostController extends Controller
             'tags' => 'nullable',
             'canonical' => 'nullable',
         ]);
-
-        if ($request->hasFile('featured_image')) {
-            $imagePath = $request->file('featured_image')->store('posts', 'public');
-            $validated['featured_image'] = $imagePath;
-        }
-
+       
         $validated['user_id'] = Auth::user()->id;
-
+        
         $validated['slug'] = Str::slug($validated['title']);
-
+        
         if($validated['status'] == 'Published'){
             $validated['published_at'] = Carbon::now();
         }
 
+        // convert images
+        if ($request->hasFile('featured_image')) {
+            $imagePath = $request->file('featured_image')->store('posts', 'public');
+            $validated['featured_image'] = $imagePath;
+
+            // convert images
+            $imageManager = ImageManager::imagick()->read(Storage::disk('public')->path($imagePath));
+            $cacheDir = "cache/posts/";
+
+            $sizes = [600,300];
+
+            foreach ($sizes as $size) {
+                // Resize image while maintaining aspect ratio
+                $resizedImage = $imageManager->scaleDown(height:$size);
+                // Define the filename without extension
+                $fileName = pathinfo($imagePath, PATHINFO_FILENAME);
+                $outputPath = "{$cacheDir}{$fileName}_{$size}.jpg";
+                Storage::disk('public')->put($outputPath, (string) $resizedImage->toJpeg(quality: 80));
+            }
+        }
+        
         Post::create($validated);
 
         return redirect()->route('admin.posts')->with('success', 'Post added successfully');
@@ -173,7 +191,7 @@ class PostController extends Controller
             'title' => 'required',
             'short_description' => 'required',
             'description' => 'required',
-            'featured_image' => 'nullable',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'user_id' => 'nullable',
             'category_id' => 'nullable',
             'sub_category_id' => 'nullable',
@@ -187,14 +205,34 @@ class PostController extends Controller
 
         $post = Post::where('id', $id)->where('user_id', Auth::user()->id)->first();
         
+        // convert images
         if ($request->hasFile('featured_image')) {
             $imagePath = $request->file('featured_image')->store('posts', 'public');
+            $cacheDir = "cache/posts/";
+
             if ($post->featured_image) {
+                $file = pathinfo($post->featured_image, PATHINFO_FILENAME);
                 Storage::disk('public')->delete($post->featured_image);
+                Storage::disk('public')->delete("{$cacheDir}{$file}_300.jpg");
+                Storage::disk('public')->delete("{$cacheDir}{$file}_600.jpg");
+
             }
             $validated['featured_image'] = $imagePath;
-        }
 
+            // convert images
+            $imageManager = ImageManager::imagick()->read(Storage::disk('public')->path($imagePath));
+
+            $sizes = [600,300];
+
+            foreach ($sizes as $size) {
+                // Resize image while maintaining aspect ratio
+                $resizedImage = $imageManager->scaleDown(height:$size);
+                // Define the filename without extension
+                $fileName = pathinfo($imagePath, PATHINFO_FILENAME);
+                $outputPath = "{$cacheDir}{$fileName}_{$size}.jpg";
+                Storage::disk('public')->put($outputPath, (string) $resizedImage->toJpeg(quality: 80));
+            }
+        }
 
         $validated['slug'] = Str::slug($validated['title']);
 
@@ -217,7 +255,11 @@ class PostController extends Controller
         $post = Post::find($id);
 
         if ($post->featured_image) {
+            $cacheDir = "cache/posts/";
+            $file = pathinfo($post->featured_image, PATHINFO_FILENAME);
             Storage::disk('public')->delete($post->featured_image);
+            Storage::disk('public')->delete("{$cacheDir}{$file}_300.jpg");
+            Storage::disk('public')->delete("{$cacheDir}{$file}_600.jpg");
         }
 
         $post->delete();

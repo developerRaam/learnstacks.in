@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -97,7 +98,7 @@ class ProfileController extends Controller
             "logo" => "nullable|file|mimes:jpg,jpeg,png|max:2048",
         ]);
 
-        $profile = User::find(session('isUser'));
+        $profile = User::find(Auth::user()->id);
 
         if ($request->hasFile('avatar')) {
             $avatarPath = $request->file('avatar')->store('users', 'public');
@@ -151,11 +152,15 @@ class ProfileController extends Controller
         
         if($validated['new_password'] === $validated['confirm_password']){
 
-            User::where('id', session('isUser'))->update([
+            $user = User::where('id', Auth::user()->id)->update([
                 'password'=> Hash::make($validated['new_password'])
             ]);
+
+            if($user){
+                return redirect()->route('admin.changePassword')->with('success', 'Password changed successfully');
+            }
     
-            return redirect()->route('admin.changePassword')->with('success', 'Password changed successfully');
+            return redirect()->route('admin.changePassword')->with('error', 'Password not changed successfully');
 
         }else{
             return redirect()->route('admin.changePassword')->with('error', 'Password does not match.');

@@ -41,30 +41,15 @@
         <!-- Structured Data for Blog Post (SEO Boost) -->
         <script type="application/ld+json">
             {
-                "@context": "https://schema.org",
-                "@type": "@stack('addOgType')",
-                "headline": "@stack('addTitle')",
-                "author": {
-                    "@type": "Person"",
-                    "name": "@stack('addAuthor')"
-                },
-                "publisher": {
-                    "@type": "Organization",
-                    "name": "@stack('addTitle')",
-                    "logo": {
-                        "@type": "ImageObject",
-                        "url": "https://learnstacks.in/logo.jpg"
-                    }
-                },
-                "datePublished": "@stack('addArticlePublishDate')",
-                "dateModified": "@stack('addArticleModifiedData')",
-                "mainEntityOfPage": {
-                    "@type": "WebPage",
-                    "@id": "{{ url()->current() }}"
-                },
-                "image": "@stack('addOgImage')",
-                "articleSection": "@stack('addCategory')",
-                "keywords": "@stack('addArticleTag')"
+              "@context": "https://schema.org",
+              "@type": "@stack('addOgType')",
+              "headline": "@stack('addTitle')",
+              "author": "@stack('addAuthor')",
+              "datePublished": "@stack('addArticlePublishDate')",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Learn Stacks"
+              }
             }
         </script>
 

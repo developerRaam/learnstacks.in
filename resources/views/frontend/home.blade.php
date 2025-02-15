@@ -12,7 +12,7 @@
                 <div class="col-md-4">
                     <div class="card custom-card">
                         @if (isset($post->featured_image))
-                            <img src="{{ asset('storage') .'/'. $post->featured_image }}" class="card-img-top" alt="{{ $post->title }}">
+                            <img src="{{ asset('storage/cache/posts') .'/'. pathinfo($post->featured_image, PATHINFO_FILENAME) . '_600.jpg' }}" class="card-img-top" alt="{{ $post->title }}">
                         @endif
                         <div class="card-body">
                             <p class="card-text">{{ $post->title }}</p>

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('googlebot')->nullable();
             $table->string('tags')->nullable();
             $table->string('canonical')->nullable();
+            $table->integer('sort_by')->default(0);
 
             $table->timestamps();
         });
