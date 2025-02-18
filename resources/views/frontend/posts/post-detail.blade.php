@@ -1,6 +1,4 @@
 @extends('frontend.common.base')
-
-<!-- Meta Tags -->
 @push('setTitle'){{ $post->title }}@endpush
 
 @push('addTitle'){{ $post->title }}@endpush
@@ -14,10 +12,10 @@
 @push('addOgImage'){{ url('storage/'.$post->featured_image) }}@endpush
 @push('addOgUrl'){{ route('frontend.postShow', $post->slug) }}@endpush
 @push('addOgType'){{ 'article' }}@endpush
-@push('addOgSiteName'){{ 'Online Notes' }}@endpush
+@push('addOgSiteName'){{ 'Learn Stacks' }}@endpush
 
 @push('addCanonical'){{ route('frontend.postShow', $post->slug) }}@endpush
-@push('addAuthor'){{ 'Online Notes' }}@endpush
+@push('addAuthor'){{ 'Learn Stacks' }}@endpush
 @push('addCategory'){{ $post->category->name }}@endpush
 
 @push('addArticlePublishDate'){{ $post->published_at }}@endpush

@@ -119,7 +119,7 @@
                                 @forelse ($posts as $post)
                                     <tr>
                                         <td>
-                                            <img height="50" src="{{ $post->featured_image ? asset('storage').'/'.$post->featured_image : asset('not-image-available.png')}}">
+                                            <img height="50" src="{{ $post->featured_image ? asset('storage/cache/posts') .'/'. pathinfo($post->featured_image, PATHINFO_FILENAME) . '_300.jpg' : asset('not-image-available.png')}}">
                                         </td>
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->status }}</td>

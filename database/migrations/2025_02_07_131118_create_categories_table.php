@@ -20,6 +20,11 @@ return new class extends Migration
             $table->boolean('menu_top')->default(1);
             $table->integer('sort_by')->default(0);
             $table->boolean('status')->default(1);
+
+            $table->text('keywords')->nullable();
+            $table->string('robots')->nullable();
+            $table->string('googlebot')->nullable();
+            $table->text('tags')->nullable();
             $table->timestamps();
         });
     }
