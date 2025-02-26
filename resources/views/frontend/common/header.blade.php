@@ -5,20 +5,35 @@
 
 <nav class="p-1 sticky-top bg-black">
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-end align-items-center">
             <div class="col-6 col-md-3">
-                <a href="/"><img height="60" width="100" src="{{ asset('storage') .'/'. app('settings')['site_logo'] }}" alt="Online Notes"></a>
+                <a href="/"><img height="60" width="100" src="{{ asset('storage') .'/'. app('settings')['site_logo'] }}" alt="Learn Stacks"></a>
             </div>
 
             <!-- For desktop -->
             <div class="col-6 col-md-9 ">
-                <div class="mt-3 d-desktop d-phone">
-                    <ul class="list-unstyled text-white d-flex justify-content-end mb-0">
+                <div class="d-desktop d-phone">
+                    <ul class="list-unstyled text-white d-flex justify-content-end align-items-center mb-0">
                         <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">Home</a></li>
                         @foreach ($categories as $category)
                             <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.post', $category->slug) }}">{{ $category->name }}</a></li>
                         @endforeach
                         <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
+                        <li class="px-3 fs-5 navbar_items">
+                            @if (Auth::check())
+                                <div class="dropdown text-end">
+                                    <a class="dropdown-toggle fs-3 text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background:transparent;">
+                                        <img src="{{ Auth::user()?->avatar }}" alt="Learn Stacks" style="border-radius: 50%; width:50px; height:50px;margin-top:0px;">
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{#"><i class="fa-solid fa-user"></i> Profile</a></li>
+                                    <li><a class="dropdown-item fs-6 text-danger" href="{{ route('frontend.logout') }}"><i class="fa-solid fa-power-off"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            @else
+                                <a class="text-decoration-none text-grey" href="{{ route('frontend.login') }}">Login</a>
+                            @endif
+                        </li>
                     </ul>
                 </div>
                 <div class="d-phone d-tab text-end h-100">

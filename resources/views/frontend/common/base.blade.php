@@ -41,18 +41,32 @@
         <!-- Structured Data for Blog Post (SEO Boost) -->
         <script type="application/ld+json">
             {
-              "@context": "https://schema.org",
-              "@type": "@stack('addOgType')",
-              "headline": "@stack('addTitle')",
-              "author": "@stack('addAuthor')",
-              "datePublished": "@stack('addArticlePublishDate')",
-              "publisher": {
-                "@type": "Organization",
-                "name": "Learn Stacks"
-              }
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": "@stack('addTitle')",
+                "description": "@stack('addDescription')",
+                "author": {
+                    "@type": "Person",
+                    "name": "Learn Stacks"
+                },
+                "datePublished": "@stack('addArticlePublishDate')",
+                "dateModified": "@stack('addArticlePublishDate')",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "@stack('addCanonical')"
+                },
+                "image": "@stack('addOgImage')",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Learn Stacks",
+                    "logo": {
+                    "@type": "ImageObject",
+                    "url": "{{ asset('logo.jpg') }}"
+                    }
+                }
             }
         </script>
-
+    
         <title>@stack('setTitle') | {{ app('settings')['site_name'] }}</title>
 
         <meta name="google-site-verification" content="j9OPEVywxg8w5HXlOCid6gOuVj3H-doTlGxLLdFbgLc" />
@@ -67,6 +81,16 @@
         
         <link rel="stylesheet" href="{{ asset('frontend/style.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/responsive.css') }}">
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D4JKMES7FP"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-D4JKMES7FP');
+        </script>
         
         <!-- Add additional css link -->
         @stack('addStyle')

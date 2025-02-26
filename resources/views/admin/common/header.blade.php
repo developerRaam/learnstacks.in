@@ -9,7 +9,7 @@
         <div class="d-flex">
             <div class="dropdown pe-3">
                 <a class="btn dropdown-toggle fs-3 text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50%; width:50px; height:50px; background:#242d37;margin-top:-2px">
-                  <i class="fa-solid fa-user"></i>
+                  <img src="{{ asset('storage') .'/'. Auth::user()?->avatar }}" alt="Learn Stacks" style="border-radius: 50%; width:50px; height:50px;margin-top: -13px;margin-left: -13px;">
                 </a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa-solid fa-user"></i> Profile</a></li>

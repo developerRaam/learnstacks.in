@@ -10,9 +10,13 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SubscriberController;
+use App\Http\Controllers\Frontend\Auth\GoogleController;
+use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\CommentController;
 use App\Http\Controllers\Frontend\PageController as FrontendPageController;
 use App\Http\Controllers\Frontend\PostController as FrontendPostController;
+use App\Http\Controllers\Frontend\Users\DashboardController as UsersDashboardController;
 
 Route::get('/admin', function () {
     return redirect()->route('admin.login');
@@ -53,11 +57,28 @@ Route::name('admin.')->group(function () {
         Route::get('edit-setting', [SettingController::class,'edit'])->name('setting');
         Route::post('update-setting', [SettingController::class,'update'])->name('updateSetting');
 
+        Route::get('subscriber', [SubscriberController::class, 'index'])->name('subscriber');
+
     });
 
 });
 
 Route::name('frontend.')->group(function () {
+
+    Route::middleware('FrontendLogoutMiddleware')->group(function (){
+        // Google Login
+        Route::get('login', [LoginController::class, 'login'])->name('login');
+        Route::controller(GoogleController::class)->group(function(){
+            Route::get('auth/google', 'redirectToGoogle')->name('googlelogin');
+            Route::get('auth/google/callback', 'handleGoogleCallback');
+        });
+    });
+
+    Route::middleware(['FrontendLoginMiddleware'])->group(function () {
+        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+        Route::get('dashboard', [UsersDashboardController::class, 'index'])->name('dashboard');
+    });
+
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('posts/{catagory_slug}', [FrontendPostController::class, 'post'])->name('post');
     Route::get('post/{slug}', [FrontendPostController::class, 'postShow'])->name('postShow');

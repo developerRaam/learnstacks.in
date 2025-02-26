@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\FrontendLoginMiddleware;
+use App\Http\Middleware\FrontendLogoutMiddleware;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\LoginMiddleware;
 use App\Http\Middleware\LogoutMiddleware;
@@ -18,6 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'LoginMiddleware' => LoginMiddleware::class,
             'LogoutMiddleware'=> LogoutMiddleware::class,
+            'FrontendLoginMiddleware' => FrontendLoginMiddleware::class,
+            'FrontendLogoutMiddleware'=> FrontendLogoutMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
