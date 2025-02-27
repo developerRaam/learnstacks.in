@@ -53,14 +53,14 @@
             fetch(route)
                 .then(response => response.json())
                 .then(data => {
-                    const avatarUrl = (data?.avatar) ? {!! json_encode(asset('storage')) !!} + '/' + data.avatar : {!! json_encode(asset('not-image-available.png')) !!};
+                    // const avatarUrl = (data?.avatar) ? {!! json_encode(asset('storage')) !!} + '/' + data.avatar : {!! json_encode(asset('not-image-available.png')) !!};
                     modalBody.innerHTML = `
                     <div class="col-md-12">
                         <div class="card p-4 shadow rounded bg-white">
                             <div class="row g-3">
                                 <div class="col-md-5">
                                     <div class="mb-3">
-                                        <img src="${avatarUrl}" alt="Avatar" class="avatar rounded-circle me-3 p-2 border" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
+                                        <img src="${data?.avatar}" alt="Avatar" class="avatar rounded-circle me-3 p-2 border" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
                                         <div class="mt-3">
                                             <h5 class="mb-1">${data.name}</h5>
                                             <p class="text-muted mb-0">${data.email}</p>

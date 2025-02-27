@@ -39,7 +39,7 @@
     
     <!-- Add additional js link -->
     @stack('addScript')
-
+    
     <script>
         // for tooltip
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -59,22 +59,34 @@
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview', 'help']]
                 ],
-                styleTags: ['p', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
                 fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana'],
                 fontNamesIgnoreCheck: ['Helvetica Neue', 'Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana'],
-                callbacks: {
-                    onImageUpload: function(files) {
-                        console.log('Image upload:', files);
-                    }
-                }
             });
-        });
+            
+            // upload images
+            $('#summernote').on('summernote.image.upload', function(we, files) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#summernote').summernote('insertImage', e.target.result, function($image) {
+                        $image.css('display', 'block').css('margin', '0 auto');
+                    });
+                };
+                reader.readAsDataURL(files[0]);
+            });
+            
+            // toggle
+            $(document).on('click', '.note-toolbar .dropdown-toggle', function(e) {
+                e.preventDefault(); // Prevent default action
+                e.stopPropagation(); // Stop event propagation
 
-        $(document).ready(function() {
-            $('.summernote').summernote();
-            var noteBar = $('.note-toolbar');
-            noteBar.find('[data-toggle]').each(function() {
-                $(this).attr('data-bs-toggle', $(this).attr('data-toggle')).removeAttr('data-toggle');
+                // Initialize Bootstrap 5 dropdown manually
+                let dropdown = bootstrap.Dropdown.getInstance(this) || new bootstrap.Dropdown(this);
+                dropdown.toggle();
+            });
+
+            $(document).on('click', function() {
+                $('.dropdown-menu.show').removeClass('show');
             });
         });
         // end summernote

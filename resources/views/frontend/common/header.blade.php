@@ -31,7 +31,7 @@
                                     </ul>
                                 </div>
                             @else
-                                <a class="text-decoration-none text-grey" href="{{ route('frontend.login') }}">Login</a>
+                                <a class="btn btn-primary" href="{{ route('frontend.login') }}">Login</a>
                             @endif
                         </li>
                     </ul>
@@ -46,15 +46,54 @@
 
         <!-- For mobile -->
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasLabel"><i class="fa-solid fa-list"></i> Navigation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <ul class="list-unstyled mb-0">
-                <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none d-block text-dark" href="/"><i class="fa-solid text-dark fa-house"></i> Home</a></li>
-            <hr>
-          </div>
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
+                    <i class="fa-solid fa-list"></i> Navigation
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="px-3 fs-5 navbar_items">
+                        <a class="text-decoration-none d-block text-dark" href="/">
+                            <i class="fa-solid text-dark fa-house"></i> Home
+                        </a>
+                    </li>
+                    <hr>
+                    @foreach ($categories as $category)
+                        <li class="px-3 fs-5 navbar_items">
+                            <a class="text-decoration-none d-block text-dark" href="{{ route('frontend.post', $category->slug) }}">
+                                <i class="fa-solid fa-folder"></i> {{ $category->name }}
+                            </a>
+                        </li>
+                        <hr>
+                    @endforeach
+                    <li class="px-3 fs-5 navbar_items">
+                        <a class="text-decoration-none d-block text-dark" href="{{ route('frontend.page', 'about-us') }}">
+                            <i class="fa-solid fa-info-circle"></i> About Us
+                        </a>
+                    </li>
+                    <hr>
+                    @if (Auth::check())
+                        <li class="px-3 fs-5 navbar_items">
+                            <a class="text-decoration-none d-block text-dark" href="#">
+                                <i class="fa-solid fa-user"></i> Profile
+                            </a>
+                        </li>
+                        <li class="px-3 fs-5 navbar_items">
+                            <a class="text-decoration-none d-block text-danger" href="{{ route('frontend.logout') }}">
+                                <i class="fa-solid fa-power-off"></i> Logout
+                            </a>
+                        </li>
+                    @else
+                        <li class="px-3 fs-5 navbar_items">
+                            <a class="text-decoration-none d-block text-primary" href="{{ route('frontend.login') }}">
+                                <i class="fa-solid fa-sign-in-alt"></i> Login
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
         </div>
     </div>
 </nav>

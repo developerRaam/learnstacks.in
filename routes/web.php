@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\Frontend\Auth\GoogleController;
@@ -58,6 +59,13 @@ Route::name('admin.')->group(function () {
         Route::post('update-setting', [SettingController::class,'update'])->name('updateSetting');
 
         Route::get('subscriber', [SubscriberController::class, 'index'])->name('subscriber');
+
+        // media
+        Route::get('media', [MediaController::class, 'index'])->name('media');
+        Route::post('media/uploadFile', [MediaController::class, 'uploadFile'])->name('uploadFile');
+        Route::get('media/getFiles', [MediaController::class, 'getFiles'])->name('getFiles');
+        Route::post('media/createFolder', [MediaController::class, 'createFolder'])->name('createFolder');
+        Route::post('media/delete', [MediaController::class, 'delete'])->name('deleteMedia');
 
     });
 
