@@ -43,7 +43,7 @@ Route::name('admin.')->group(function () {
         
         Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
 
-        Route::resource('user', UserController::class)->name('index', 'user')->only('index', 'show', 'update');
+        Route::resource('user', UserController::class)->name('index', 'user');
 
         Route::resource('banner', BannerController::class)->name('index', 'banner');
 
@@ -88,7 +88,7 @@ Route::name('frontend.')->group(function () {
     });
 
     Route::get('/', [HomeController::class, 'home'])->name('home');
-    Route::get('posts/{catagory_slug}', [FrontendPostController::class, 'post'])->name('post');
+    Route::get('category/{catagory_slug}', [FrontendPostController::class, 'post'])->name('post');
     Route::get('post/{slug}', [FrontendPostController::class, 'postShow'])->name('postShow');
     Route::post('email-subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
     

@@ -106,6 +106,14 @@ class MediaController extends Controller
     // delete files
     public function delete(Request $request)
     {
+        // check permission
+        if (!auth()->user()->can('delete_media')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You don\'t have permission to delete media'
+            ]);
+        }
+
         $request->validate([
             'files' => 'required|array',
         ]);
@@ -113,7 +121,10 @@ class MediaController extends Controller
         $files = $request->input('files');
 
         if (empty($files)) {
-            return response()->json(['error' => 'No files provided'], 400);
+            return response()->json([
+                'success' => false,
+                'message' => 'No files provided'
+            ]);
         }
 
         $deleted = [];
@@ -140,10 +151,8 @@ class MediaController extends Controller
 
         // Prepare response
         return response()->json([
-            'error' => empty($notFound) ? 0 : 1,
-            'message' => empty($notFound) ? 'Files deleted successfully' : 'Some files/folders were not found',
-            'deleted' => $deleted,
-            'not_found' => $notFound,
+            'success' => true,
+            'message' => 'Files deleted successfully',
         ]);
     }
 

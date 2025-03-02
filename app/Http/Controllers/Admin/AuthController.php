@@ -33,7 +33,7 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-            if ($user->role === 'Admin') {
+            if ($user->role === 'superadmin' || $user->role === 'admin') {
                 return redirect()->route('admin.dashboard')->with('success', 'Login successful.');
             } else {
                 Auth::logout();

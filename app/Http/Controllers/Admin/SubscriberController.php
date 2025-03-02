@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class SubscriberController extends Controller
 {
     public function index(Request $request){
+        // check permission
+        if (!auth()->user()->can('view_subscriber')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
         $data['heading_title'] = "Subscribers";
         $data['list_title'] = "Subscriber List";
 

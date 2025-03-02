@@ -112,7 +112,7 @@
                     </label>
                   </div>
                 <button type="submit" class="login_btn">Login</button>
-                <a href="{{ $route_forgot }}" class="text-decoration-none">Forgot Password</a>
+                {{-- <a href="{{ $route_forgot }}" class="text-decoration-none">Forgot Password</a> --}}
             </form>
         </div>
         

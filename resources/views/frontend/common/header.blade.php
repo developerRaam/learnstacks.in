@@ -20,7 +20,7 @@
                         @endforeach
                         <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
                         <li class="px-3 fs-5 navbar_items">
-                            @if (Auth::check())
+                            @if (Auth::check() && Auth::user()->role === 'User')
                                 <div class="dropdown text-end">
                                     <a class="dropdown-toggle fs-3 text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background:transparent;">
                                         <img src="{{ Auth::user()?->avatar }}" alt="Learn Stacks" style="border-radius: 50%; width:50px; height:50px;margin-top:0px;">

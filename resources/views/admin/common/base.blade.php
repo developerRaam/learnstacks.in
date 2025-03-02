@@ -86,7 +86,7 @@
             });
 
             $(document).on('click', function() {
-                $('.dropdown-menu.show').removeClass('show');
+                $('.note-dropdown-menu.show').removeClass('show');
             });
         });
         // end summernote

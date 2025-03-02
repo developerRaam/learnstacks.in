@@ -53,30 +53,35 @@
             fetch(route)
                 .then(response => response.json())
                 .then(data => {
-                    // const avatarUrl = (data?.avatar) ? {!! json_encode(asset('storage')) !!} + '/' + data.avatar : {!! json_encode(asset('not-image-available.png')) !!};
-                    modalBody.innerHTML = `
-                    <div class="col-md-12">
-                        <div class="card p-4 shadow rounded bg-white">
-                            <div class="row g-3">
-                                <div class="col-md-5">
-                                    <div class="mb-3">
-                                        <img src="${data?.avatar}" alt="Avatar" class="avatar rounded-circle me-3 p-2 border" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
-                                        <div class="mt-3">
-                                            <h5 class="mb-1">${data.name}</h5>
-                                            <p class="text-muted mb-0">${data.email}</p>
+
+                    if(data.success){
+                        // const avatarUrl = (data?.avatar) ? {!! json_encode(asset('storage')) !!} + '/' + data.avatar : {!! json_encode(asset('not-image-available.png')) !!};
+                        modalBody.innerHTML = `
+                        <div class="col-md-12">
+                            <div class="card p-4 shadow rounded bg-white">
+                                <div class="row g-3">
+                                    <div class="col-md-5">
+                                        <div class="mb-3">
+                                            <img src="${data.user?.avatar}" alt="Avatar" class="avatar rounded-circle me-3 p-2 border" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
+                                            <div class="mt-3">
+                                                <h5 class="mb-1">${data.user.name}</h5>
+                                                <p class="text-muted mb-0">${data.user.email}</p>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-7">
+                                        <p><strong class="d-inline-block" style="width:170px">State:</strong> ${data.user.state ?? 'N/A'}</p>
+                                        <p><strong class="d-inline-block" style="width:170px">Phone:</strong> ${data.user.phone ?? 'N/A'}</p>
+                                        <p><strong class="d-inline-block" style="width:170px">Role:</strong> ${data.user.role ?? 'N/A'}</p>
+                                    </div>    
                                 </div>
-                                <div class="col-md-7">
-                                    <p><strong class="d-inline-block" style="width:170px">State:</strong> ${data.state ?? 'N/A'}</p>
-                                    <p><strong class="d-inline-block" style="width:170px">Phone:</strong> ${data.phone ?? 'N/A'}</p>
-                                    <p><strong class="d-inline-block" style="width:170px">Role:</strong> ${data.role ?? 'N/A'}</p>
-                                </div>    
                             </div>
                         </div>
-                    </div>
-
-                    `;
+    
+                        `;
+                    }else{
+                        modalBody.innerHTML = '<p>'+ data.message +'</p>';
+                    }
                 })
                 .catch(error => {
                     modalBody.innerHTML = '<p>Error loading user details.</p>';
@@ -113,6 +118,9 @@
                                 @endforeach
                             </ul>
                         </div>
+                    </div>
+                    <div>
+                        <a class="btn btn-primary fs-4 px-3" href="{{$add}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add {{$heading_title}}"><i class="fa-solid fa-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -170,6 +178,7 @@
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" data-id="{{ $user->id }}">
                                                 <i class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View"></i>
                                             </button>
+                                            <a class="btn btn-primary me-2" href="{{ route('admin.user'). '/'. $user->id .'/edit' }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"><i class="fa-solid fa-pencil"></i></a>
                                         </td>
                                     </tr>
                                     @empty

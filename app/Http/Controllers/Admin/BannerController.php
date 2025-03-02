@@ -16,6 +16,11 @@ class BannerController extends Controller
      */
     public function index()
     {
+        // check permission
+        if (!auth()->user()->can('view_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Banner";
         $data['list_title'] = "Banner List";
 
@@ -40,6 +45,11 @@ class BannerController extends Controller
      */
     public function create()
     {
+        // check permission
+        if (!auth()->user()->can('create_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Add Banner";
         $data['list_title'] = "Add Banner";
 
@@ -67,6 +77,11 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
+        // check permission
+        if (!auth()->user()->can('store_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validated = $request->validate([
             'title' => 'required',
             'status' => 'nullable',
@@ -90,7 +105,10 @@ class BannerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // check permission
+        if (!auth()->user()->can('show_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
     }
 
     /**
@@ -98,6 +116,11 @@ class BannerController extends Controller
      */
     public function edit(string $id)
     {
+        // check permission
+        if (!auth()->user()->can('edit_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Edit Banner";
         $data['list_title'] = "Edit Banner";
 
@@ -127,6 +150,11 @@ class BannerController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // check permission
+        if (!auth()->user()->can('update_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validated = $request->validate([
             'title' => 'required',
             'status' => 'nullable',
@@ -155,6 +183,11 @@ class BannerController extends Controller
      */
     public function destroy(string $id)
     {
+        // check permission
+        if (!auth()->user()->can('delete_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $banner = Banner::find($id);
 
         if ($banner->image) {

@@ -57,7 +57,7 @@ class GoogleController extends Controller
                 'verified_email'     => true,
                 'password'           => Hash::make(rand(1000, 9999)),
                 'status'             => true,
-                'role'               => 'User',
+                'role'               => 'user',
             ]);
 
             Auth::login($newUser);

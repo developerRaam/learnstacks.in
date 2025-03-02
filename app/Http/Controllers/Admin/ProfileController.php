@@ -28,7 +28,7 @@ class ProfileController extends Controller
             'href' => null
         ];
 
-        $data['profiles'] = User::where('role', 'Admin')->get();
+        $data['profile'] = Auth::user();
 
         return view("admin.profile.profile", $data);
 
@@ -82,7 +82,7 @@ class ProfileController extends Controller
         $data['action'] = route('admin.profile') .'/'. $id;
         $data['back'] = route('admin.profile');
 
-        $data['profile'] = User::where('id', $id)->where('role', 'Admin')->first();
+        $data['profile'] = Auth::user();
 
         return view("admin.profile.profile-form", $data);
     }

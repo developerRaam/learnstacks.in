@@ -28,6 +28,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // handle 404 page
         $exceptions->render(function (HttpException $error) {
-            return response()->view('frontend.errors.404', ["error" =>$error]);
+            return response()->view('errors.404', ["error" =>$error]);
         });
     })->create();

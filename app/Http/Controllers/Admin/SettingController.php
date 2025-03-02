@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Storage;
 class SettingController extends Controller
 {
     public function edit(Request $request){
+        // check permission
+        if (!auth()->user()->can('edit_setting')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Setting";
         $data['list_title'] = "Edit Setting";
 
@@ -50,6 +55,11 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
+        // check permission
+        if (!auth()->user()->can('update_setting')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validatedData = $request->validate([
             'social_media_facebook_url' => 'nullable|url',
             'social_media_instagram_url' => 'nullable|url',

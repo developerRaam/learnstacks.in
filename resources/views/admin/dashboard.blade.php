@@ -12,13 +12,17 @@
                 @include('admin.common.left-sidebar')
             </div>
             <div class="col-sm-10 p-0">
-                @include('admin.common.alert')
+
                 <div class="m-4">
                     <div class="admin-title">
                         <h2>Dashboard</h2>
                     </div>
                 </div>
                 <div class="row g-3 px-4">
+                    
+                    <!-- alert message -->
+                    @include('admin.common.alert')
+
                     <div class="col-6 col-sm-6">
                         <div class="card dashboard dashboard-card1">
                             <div class="card-body p-5">

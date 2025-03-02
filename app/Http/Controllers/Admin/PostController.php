@@ -20,6 +20,11 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+        if (!$user->can('view_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Post";
         $data['list_title'] = "Post List";
 
@@ -32,7 +37,12 @@ class PostController extends Controller
             'href' => null
         ];
 
-        $query = Post::select('*');
+        // check user
+        if($user->role == 'superadmin'){
+            $query = Post::select('*');
+        }else{
+            $query = Post::where('user_id', $user->id)->select('*');
+        }
 
         // Apply filters
         if ($request->filled('search')) {
@@ -65,6 +75,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        // check permission
+        if (!auth()->user()->can('create_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Add Post";
         $data['list_title'] = "Add Post";
 
@@ -94,13 +109,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        // check permission
+        if (!$user->can('store_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:posts,title',
             'short_description' => 'required',
             'description' => 'required',
             'featured_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'user_id' => 'nullable',
-            'category_id' => 'nullable',
+            'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'status' => 'required',
             'keywords' => 'nullable',
@@ -109,7 +130,7 @@ class PostController extends Controller
             'tags' => 'nullable',
             'canonical' => 'nullable',
         ]);
-       
+               
         $validated['user_id'] = Auth::user()->id;
         
         $validated['slug'] = Str::slug($validated['title']);
@@ -149,7 +170,12 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = Auth::user();
+
+        // check permission
+        if (!$user->can('show_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
     }
 
     /**
@@ -157,6 +183,13 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+        $user = Auth::user();
+
+        // check permission
+        if (!$user->can('edit_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Edit Post";
         $data['list_title'] = "Edit Post";
 
@@ -176,7 +209,17 @@ class PostController extends Controller
         $data['action'] = route('admin.posts') .'/'. $id;
         $data['back'] = route('admin.posts');
 
-        $data['post'] = Post::find($id);
+        // check user
+        if($user->role == 'superadmin'){
+            $data['post'] = Post::find($id);
+        }else{
+            $data['post'] = Post::where('id', $id)->where('user_id', $user->id)->first();
+        }
+
+        if(!$data['post']){
+            abort(404, 'Post Not Found');
+        }
+        
         $data['categories'] = Category::all();  
 
         return view("admin.posts.post-form", $data);
@@ -187,12 +230,19 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = Auth::user();
+
+        // check permission
+        if (!$user->can('update_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validated = $request->validate([
             'title' => 'required',
             'short_description' => 'required',
             'description' => 'required',
             'featured_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'user_id' => 'nullable',
+            'user_id' => 'required',
             'category_id' => 'nullable',
             'sub_category_id' => 'nullable',
             'status' => 'required',
@@ -203,7 +253,11 @@ class PostController extends Controller
             'canonical' => 'nullable',
         ]);
 
-        $post = Post::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $post = Post::where('id', $id)->where('user_id', $validated['user_id'])->first();
+
+        if(!$post){
+            abort(404, 'Post Not Found');
+        }
         
         // convert images
         if ($request->hasFile('featured_image')) {
@@ -252,9 +306,21 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $post = Post::find($id);
+        $user = Auth::user();
 
-        if ($post->featured_image) {
+        // check permission
+        if (!$user->can('delete_post')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
+        // check user
+        if($user->role == 'superadmin'){
+            $post = Post::where('id', $id)->first();
+        }else{
+            $post = Post::where('id', $id)->where('user_id', $user->id);
+        }
+
+        if (isset($post->featured_image)) {
             $cacheDir = "cache/posts/";
             $file = pathinfo($post->featured_image, PATHINFO_FILENAME);
             Storage::disk('public')->delete($post->featured_image);

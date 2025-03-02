@@ -14,6 +14,11 @@ class PageController extends Controller
      */
     public function index(Request $request)
     {
+        // check permission
+        if (!auth()->user()->can('view_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Page";
         $data['list_title'] = "Page List";
 
@@ -37,6 +42,11 @@ class PageController extends Controller
      */
     public function create()
     {
+        // check permission
+        if (!auth()->user()->can('create_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Add Page";
         $data['list_title'] = "Add Page";
 
@@ -65,6 +75,11 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+        // check permission
+        if (!auth()->user()->can('store_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validated = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
@@ -94,6 +109,11 @@ class PageController extends Controller
      */
     public function edit(string $id)
     {
+        // check permission
+        if (!auth()->user()->can('edit_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $data['heading_title'] = "Edit Page";
         $data['list_title'] = "Edit Page";
 
@@ -123,6 +143,11 @@ class PageController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // check permission
+        if (!auth()->user()->can('update_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         $validated = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
@@ -144,6 +169,11 @@ class PageController extends Controller
      */
     public function destroy(string $id)
     {
+        // check permission
+        if (!auth()->user()->can('delete_page')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
         Page::find($id)->delete();
 
         return redirect()->route('admin.pages')->with('success','Page deleted successfully');

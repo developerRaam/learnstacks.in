@@ -39,6 +39,12 @@
                         </div>
                         <!-- Show all images  -->
                         <div class="col-sm-12">
+        
+                            <div class="mt-3">
+                                <!-- Alert Message -->
+                                @include('admin.common.alert')
+                            </div>
+
                             <div class="card mt-4 p-2">
                                 <div class="row" id="show_all_images">
                                 </div>
@@ -264,40 +270,63 @@
         });
     })
 
-    // delete files and folder
+    // Delete files and folders
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.delete_files').forEach(deleteButton => {
             deleteButton.addEventListener("click", () => {
                 const mediaCheckbox = document.querySelectorAll('.media_checkbox');
                 let selectedFiles = [];
+
+                // Collect selected files
                 mediaCheckbox.forEach(element => {
-                    if(element.checked){
-                        selectedFiles.push(element.getAttribute('data-name'))
+                    if (element.checked) {
+                        selectedFiles.push(element.getAttribute('data-name'));
                     }
                 });
 
+                // Check if files are selected
+                if (selectedFiles.length === 0) {
+                    alert("Please select at least one file to delete.");
+                    return;
+                }
+
+                // Confirmation dialog before deletion
+                if (!confirm(`Are you sure you want to delete ${selectedFiles.length} file(s)?`)) {
+                    return; // Stop if user cancels
+                }
+
+                // Prepare FormData
                 let formData = new FormData();
-                formData.append('files[]', selectedFiles);
+                selectedFiles.forEach(file => formData.append('files[]', file));
                 formData.append('_token', '{{ csrf_token() }}');
+
+                // AJAX request to delete files
                 $.ajax({
                     url: "/admin/media/delete",
-                    type: "post",
+                    type: "POST",
                     data: formData,
                     processData: false, // Prevent jQuery from processing the data
                     contentType: false, // Prevent jQuery from setting the Content-Type header
                     success: function (response) {
-                        alert(response.message) // Handle success
+                        alert(response.message); // Handle success
                         document.getElementById('new_folder_box').value = '';
-                        showAllImages();
-                        getFiles();
+                        showAllImages(); 
+                        getFiles(); 
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error(textStatus, errorThrown); // Handle errors
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error:", textStatus, errorThrown); 
+                        
+                        if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                            alert(jqXHR.responseJSON.error.message);
+                        } else {
+                            alert("An error occurred while deleting files. Please try again.");
+                        }
                     }
                 });
             });
-        })
-    })
+        });
+    });
+
 
     // open folder
     document.querySelectorAll('.open_folder').forEach(openFolder => {

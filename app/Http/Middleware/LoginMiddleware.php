@@ -16,7 +16,7 @@ class LoginMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
+        if (Auth::check() && (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin')) {
             return $next($request);
         }
         return redirect()->route('admin.login');

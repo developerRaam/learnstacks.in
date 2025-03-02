@@ -49,7 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($profiles as $profile)
+                                @if ($profile)
                                     <tr>
                                         <td>{{ $profile->name }}</td>
                                         <td>{{ $profile->email }}</td>
@@ -57,7 +57,7 @@
                                             <a class="btn btn-primary me-2" href="{{ route('admin.profile'). '/'. $profile->id .'/edit' }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"><i class="fa-solid fa-pencil"></i></a>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                         </table>
                     </div>

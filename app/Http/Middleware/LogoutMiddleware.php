@@ -16,7 +16,7 @@ class LogoutMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
+        if (Auth::check() && (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin')) {
             return redirect()->route('admin.dashboard');
         }
         return $next($request);
