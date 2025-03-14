@@ -21,7 +21,7 @@ class PostController extends Controller
             ->where('category_id', $category->id)
             ->latest('created_at')->simplePaginate();
 
-        $data['category'] = $category?->name;
+        $data['category'] = $category;
         
         return view('frontend.posts.posts', $data);
     }

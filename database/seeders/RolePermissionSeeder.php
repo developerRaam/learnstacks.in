@@ -27,6 +27,28 @@ class RolePermissionSeeder extends Seeder
         // Define permissions
         $permissions = [
             'view_user',
+            'create_user',
+            'store_user',
+            'show_user',
+            'edit_user',
+            'update_user',
+            'delete_user',
+
+            'view_category',
+            'create_category',
+            'store_category',
+            'show_category',
+            'edit_category',
+            'update_category',
+            'delete_category',
+
+            'view_sub_category',
+            'create_sub_category',
+            'store_sub_category',
+            'show_sub_category',
+            'edit_sub_category',
+            'update_sub_category',
+            'delete_sub_category',
 
             'view_banner',
             'create_banner',
@@ -35,7 +57,6 @@ class RolePermissionSeeder extends Seeder
             'edit_banner',
             'update_banner',
             'delete_banner',
-            'publish_banner',
 
             'view_post',
             'create_post',
@@ -53,6 +74,14 @@ class RolePermissionSeeder extends Seeder
             'edit_page',
             'update_page',
             'delete_page',
+
+            'view_permission',
+            'create_permission',
+            'store_permission',
+            'show_permission',
+            'edit_permission',
+            'update_permission',
+            'delete_permission',
 
             'delete_media',
 

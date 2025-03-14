@@ -32,11 +32,22 @@
         <link rel="alternate" hreflang="en" href="https://learnstacks.in">
 
         <!-- Article Meta Tags -->
-        <meta property="article:published_time" content="@stack('addArticlePublishDate')">
-        <meta property="article:modified_time" content="@stack('addArticleModifiedData')">
-        <meta property="article:author" content="@stack('addAuthor')">
-        <meta property="article:section" content="@stack('addArticleSection')">
-        <meta property="article:tag" content="@stack('addArticleTag')"> <!-- Relevant keywords as tags -->
+        @if(!empty(trim($__env->yieldPushContent('addArticlePublishDate'))))
+            <meta property="article:published_time" content="@stack('addArticlePublishDate')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addArticleModifiedData'))))
+            <meta property="article:modified_time" content="@stack('addArticleModifiedData')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addAuthor'))))
+            <meta property="article:author" content="@stack('addAuthor')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addArticleSection'))))
+            <meta property="article:section" content="@stack('addArticleSection')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addArticleTag'))))
+            <meta property="article:tag" content="@stack('addArticleTag')">
+        @endif
+        
 
         <!-- Structured Data for Blog Post (SEO Boost) -->
         <script type="application/ld+json">
@@ -72,8 +83,9 @@
         <meta name="google-site-verification" content="j9OPEVywxg8w5HXlOCid6gOuVj3H-doTlGxLLdFbgLc" />
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+        <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -81,6 +93,9 @@
         
         <link rel="stylesheet" href="{{ asset('frontend/style.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/responsive.css') }}">
+
+        <!-- Sweet alert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-D4JKMES7FP"></script>
@@ -105,6 +120,9 @@
 
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Sweet alert -->
+        <script src="{{ URL::asset('frontend/js/sweet-alert.js')}}"></script>
         
         <!-- Add additional js link -->
         @stack('addScript')

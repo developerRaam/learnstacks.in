@@ -56,10 +56,6 @@ class UserController extends Controller
             $query->whereDate('users.created_at', '<=', $request->end_date);
         }
 
-        if ($request->filled('plan')) {
-            $query->where('users.plan_id', $request->plan);
-        }
-
         $data['users'] = $query->latest('users.created_at')->paginate();
 
         $data['add'] = route('admin.user.create');
@@ -72,8 +68,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $data['heading_title'] = "Edit User";
-        $data['list_title'] = "Edit User";
+        $data['heading_title'] = "Add User";
+        $data['list_title'] = "Add User";
 
         $data['breadcrumbs'][] = [
             'text' => 'Home',
@@ -84,7 +80,7 @@ class UserController extends Controller
             'href' => route('admin.user'),
         ];
         $data['breadcrumbs'][] = [
-            'text' => 'Edit User',
+            'text' => 'Add User',
             'href' => null
         ];
 

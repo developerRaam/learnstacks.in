@@ -2,22 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\SubscriberController;
-use App\Http\Controllers\Frontend\Auth\GoogleController;
-use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\CommentController;
+use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Frontend\Auth\LoginController;
+use App\Http\Controllers\Frontend\Users\NoteController;
+use App\Http\Controllers\Frontend\Auth\GoogleController;
+use App\Http\Controllers\Frontend\Users\AddCategoryController;
 use App\Http\Controllers\Frontend\PageController as FrontendPageController;
 use App\Http\Controllers\Frontend\PostController as FrontendPostController;
-use App\Http\Controllers\Frontend\Users\DashboardController as UsersDashboardController;
+use App\Http\Controllers\Frontend\Users\DashboardController as UsersDashboardController; 
 
 Route::get('/admin', function () {
     return redirect()->route('admin.login');
@@ -67,6 +72,12 @@ Route::name('admin.')->group(function () {
         Route::post('media/createFolder', [MediaController::class, 'createFolder'])->name('createFolder');
         Route::post('media/delete', [MediaController::class, 'delete'])->name('deleteMedia');
 
+        Route::resource('category', CategoryController::class)->name('index', 'category');
+        Route::resource('sub-category', SubCategoryController::class)->name('index', 'subcategory');
+
+        Route::get('view-permission', [PermissionController::class, 'viewPermission'])->name('viewPermission');
+        Route::post('give-permission', [PermissionController::class, 'givePermission'])->name('givePermission');
+        Route::get('get-permission/{user_id}', [PermissionController::class, 'getPermission']);
     });
 
 });
@@ -82,9 +93,13 @@ Route::name('frontend.')->group(function () {
         });
     });
 
-    Route::middleware(['FrontendLoginMiddleware'])->group(function () {
-        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-        Route::get('dashboard', [UsersDashboardController::class, 'index'])->name('dashboard');
+    Route::middleware(['FrontendLoginMiddleware'])->group(function ($request) {
+        route::prefix('user/')->group(function () {
+            Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+            Route::get('dashboard', [UsersDashboardController::class, 'index'])->name('dashboard');
+            Route::resource('note', NoteController::class)->name('index', 'note');
+            Route::resource('chapter', AddCategoryController::class)->name('index', 'chapter');
+        });
     });
 
     Route::get('/', [HomeController::class, 'home'])->name('home');

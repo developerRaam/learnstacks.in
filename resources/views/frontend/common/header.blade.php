@@ -20,14 +20,17 @@
                         @endforeach
                         <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
                         <li class="px-3 fs-5 navbar_items">
-                            @if (Auth::check() && Auth::user()->role === 'User')
+                            @if (Auth::check() && Auth::user()->role === 'user')
                                 <div class="dropdown text-end">
                                     <a class="dropdown-toggle fs-3 text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background:transparent;">
                                         <img src="{{ Auth::user()?->avatar }}" alt="Learn Stacks" style="border-radius: 50%; width:50px; height:50px;margin-top:0px;">
                                     </a>
                                     <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{#"><i class="fa-solid fa-user"></i> Profile</a></li>
-                                    <li><a class="dropdown-item fs-6 text-danger" href="{{ route('frontend.logout') }}"><i class="fa-solid fa-power-off"></i> Logout</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('frontend.dashboard') }}"><i class="lni lni-dashboard-square-1"></i> Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="lni lni-user-4"></i> Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('frontend.chapter') }}"><i class="lni lni-menu-cheesburger"></i> Chapter List</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('frontend.note') }}"><i class="lni lni-notebook-1"></i> Note List</a></li>
+                                        <li><a class="dropdown-item text-danger d-flex align-items-center" href="{{ route('frontend.logout') }}"><i class="lni lni-power-button me-1"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             @else
@@ -38,7 +41,7 @@
                 </div>
                 <div class="d-phone d-tab text-end h-100">
                     <div class="h-100 d-flex align-items-center justify-content-end">
-                        <button class="btn text-white border" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="fa-solid fa-bars fs-3 mt-1"></i></button>
+                        <button class="btn text-white border" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="lni lni-menu-hamburger-1 mt-1"></i></button>
                     </div>
                 </div>
             </div>
@@ -80,6 +83,7 @@
                                 <i class="fa-solid fa-user"></i> Profile
                             </a>
                         </li>
+                        <hr>
                         <li class="px-3 fs-5 navbar_items">
                             <a class="text-decoration-none d-block text-danger" href="{{ route('frontend.logout') }}">
                                 <i class="fa-solid fa-power-off"></i> Logout

@@ -16,7 +16,7 @@ class FrontendLogoutMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role == 'User') {
+        if (Auth::check() && Auth::user()->role == 'user') {
             return redirect()->route('frontend.dashboard');
         }
         return $next($request);

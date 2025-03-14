@@ -106,11 +106,29 @@
                                 <div class="col-md-12">
                                     <div class="row mb-4">
                                         <div class="col-2 text-end">
-                                            <label for="short_description">Short Description</label>
+                                            <label for="slug">Slug</label>
                                         </div>
                                         <div class="col-10">
-                                            <textarea name="short_description" id="short_description" class="form-control" rows="3" placeholder="Short Description">{{ old('short_description', $post->short_description ?? '') }}</textarea>
-                                            @error('short_description')
+                                            <input type="text" name="slug" class="form-control" placeholder="Slug" value="{{ old('slug', $post->slug ?? '') }}">
+                                            @error('slug')
+                                                <div class="errors">
+                                                    <span class="text-danger">
+                                                        {{$message}}
+                                                    </span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="description">Description</label>
+                                        </div>
+                                        <div class="col-10">
+                                            <textarea name="description" class="form-control" id="summernote" rows="10" placeholder="Description">{{ old('description', $post->description ?? '') }}</textarea>
+                                            @error('description')
                                                 <div class="errors">
                                                     <span class="text-danger">
                                                         {{$message}}
@@ -124,11 +142,11 @@
                                 <div class="col-md-12">
                                     <div class="row mb-4">
                                         <div class="col-2 text-end">
-                                            <label for="description">description</label>
+                                            <label for="short_description">Short Description</label>
                                         </div>
                                         <div class="col-10">
-                                            <textarea name="description" class="form-control" id="summernote" rows="10" placeholder="Description">{{ old('description', $post->description ?? '') }}</textarea>
-                                            @error('description')
+                                            <textarea name="short_description" id="short_description" class="form-control" rows="3" placeholder="Short Description">{{ old('short_description', $post->short_description ?? '') }}</textarea>
+                                            @error('short_description')
                                                 <div class="errors">
                                                     <span class="text-danger">
                                                         {{$message}}
@@ -234,16 +252,16 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="row mb-4">
                                         <div class="col-2 text-end">
                                             <label for="canonical">Canonical</label>
                                         </div>
                                         <div class="col-10">
-                                            <input type="text" name="canonical" class="form-control" placeholder="Canonical" value="{{ old('canonical', $post->canonical ?? '') }}">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+                                <input type="hidden" name="canonical" class="form-control" placeholder="Canonical" value="{{ old('canonical', $post->canonical ?? '') }}">
 
                                 <div class="col-md-12">
                                     <div class="row mb-4">

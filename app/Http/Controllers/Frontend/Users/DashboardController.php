@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(){
-        return view('frontend.users.dashboard');
+        $data['heading_title'] = "Dashboard";
+        $data['list_title'] = "Dashboard";
+
+        $data['breadcrumbs'][] = [
+            'text' => 'Dashboard',
+            'href' => null
+        ];
+
+        return view('frontend.users.dashboard', $data);
     }
 }

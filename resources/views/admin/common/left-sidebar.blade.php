@@ -7,6 +7,10 @@
                 <li><a class="text-decoration-none text-white d-block" href="{{ route('admin.user') }}"><i class="fa-solid fa-user"></i> User</a></li>
             @endcan
 
+            @can('view_category')
+                <li><a class="text-decoration-none text-white d-block" href="{{ route('admin.category') }}"><i class="fa-solid fa-user"></i> Category</a></li>
+            @endcan
+
             @can('view_banner')
                 <li><a class="text-decoration-none text-white d-block" href="{{ route('admin.banner') }}"><i class="fa-solid fa-photo-film"></i> Banner</a></li>
             @endcan
@@ -23,6 +27,10 @@
             
             @can('view_subscriber')
                 <li><a class="text-decoration-none text-white d-block" href="{{ route('admin.subscriber') }}"><i class="fa-solid fa-users"></i> Subscriber</a></li>
+            @endcan
+
+            @can('view_subscriber')
+                <li><a class="text-decoration-none text-white d-block" href="{{ route('admin.viewPermission') }}"><i class="fa-solid fa-lock"></i> Permission</a></li>
             @endcan
 
             @can('edit_setting')

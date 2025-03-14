@@ -10,7 +10,7 @@
                 @include('frontend.users.sidebar')
             </div>
             <div class="col-md-9">
-                <div class="card py-2 mt-3 px-2 overflow-hidden">
+                <div class="card py-2 mt-3 px-2">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <h2 class="fs-5 mb-0">{{$heading_title}}</h2>
@@ -41,9 +41,16 @@
                     </div>
                 </div>
 
-                <div class="py-3">
-                    <div class="w-100 overflow-hidden">
-                        <img class="w-100" src="{{ asset('online-notes.jpg') }}" alt="Learn Stacks online notes">
+                <div class="py-3" style="text-align: justify">
+                    <div class="card p-3 bg-light">
+                        <div class="d-flex justify-content-between">
+                            <h1 class="fs-4 mb-0">{{ $note->name }}</h1>
+                            <a href="{{ route('frontend.note.edit', $note->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        </div><hr>
+
+                        <div>
+                            {!! $note->description !!}
+                        </div>
                     </div>
                 </div>
             </div>

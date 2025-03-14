@@ -117,7 +117,8 @@ class PostController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required|unique:posts,title',
+            'title' => 'required',
+            'slug' => 'required|unique:posts,slug',
             'short_description' => 'required',
             'description' => 'required',
             'featured_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -236,9 +237,12 @@ class PostController extends Controller
         if (!$user->can('update_post')) {
             return back()->withError('You don\'t have permission to access this.');
         }
+        
+        $post = Post::where('id', $id)->where('user_id', $request->user_id)->first();
 
         $validated = $request->validate([
             'title' => 'required',
+            'slug' => 'required|unique:posts,slug,' . $post->id,
             'short_description' => 'required',
             'description' => 'required',
             'featured_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -253,7 +257,8 @@ class PostController extends Controller
             'canonical' => 'nullable',
         ]);
 
-        $post = Post::where('id', $id)->where('user_id', $validated['user_id'])->first();
+        $validated['slug'] = Str::slug($request->slug);
+
 
         if(!$post){
             abort(404, 'Post Not Found');
@@ -287,8 +292,6 @@ class PostController extends Controller
                 Storage::disk('public')->put($outputPath, (string) $resizedImage->toJpeg(quality: 80));
             }
         }
-
-        $validated['slug'] = Str::slug($validated['title']);
 
         if($validated['status'] == 'Published'){
             $validated['published_at'] = Carbon::now();

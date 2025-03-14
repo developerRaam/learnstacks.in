@@ -37,7 +37,7 @@ class GoogleController extends Controller
 
                 Auth::login($user);
                 
-                if ($user->role === 'User') {
+                if ($user->role == 'user') {
                     return redirect()->route('frontend.dashboard')->with('success', 'Login successful.');
                 } else {
                     Auth::logout();

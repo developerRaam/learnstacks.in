@@ -16,22 +16,32 @@
             });
         });
 
-        // Site logo
-        function previewImage(event) {
-            const input = event.target;
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById(`imagePreview`);
-                    img.src = e.target.result;
+        const userId = document.getElementById('user_id')
+        if(userId){
+            userId.addEventListener('click', () => {
+                // Select all checkboxes and uncheck them
+                document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    input.checked = false;
+                });
+                
+                if(userId.value.trim() !== ''){
+                    // Send to PHP using fetch
+                    fetch(`/admin/get-permission/${encodeURIComponent(userId.value)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.data) {
+                            data.data.forEach(element => {
+                                const checkbox = document.getElementById(`permission_${element.id}`);
+                                if (checkbox) {
+                                    checkbox.checked = true;
+                                }else{
+                                    checkbox.checked = false;
+                                }
+                            });
+                        }
+                    })
                 }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function triggerFileUpload(index) {
-            document.getElementById(`imageUpload`).click();
+            })
         }
 
     </script>
@@ -80,118 +90,49 @@
                         <form action="{{$action}}" id="saveForm" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row g-4 px-4">
-
-                                <!-- General Setting setting -->
-                                <div class="card px-0 rounded-0">
-                                    <div class="card-header rounded-0 text-white p-0 px-2" style="background-color:rgb(12 34 56 / 78%)" data-bs-toggle="collapse" href="#general" role="button" aria-expanded="false" aria-controls="general">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h4 class="fs-6 rounded mb-0">General Setting</h4>
-                                            <span class="fa-sloid fa-plus fs-3"></span>
+                                <div class="col-md-12">
+                                    <label for="user_id">User Name</label>
+                                    <select name="user_id" id="user_id" class="form-control mt-2">
+                                        <option value="">--Select User--</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }} <span>({{ $user->email }})</span></option>
+                                        @endforeach
+                                    </select>
+                                    @error('user_id')
+                                        <div class="errors">
+                                            <span class="text-danger">
+                                                {{$message}}
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div class="collapse show" id="general">
-                                        <div class="card-body">
-                                            <div class="row">
+                                    @enderror
+                                </div>
 
-                                                <div class="col-md-4">
-                                                    <label for="site_logo">Site Logo</label>
-                                                    <div class="card p-2 mt-3" style="width: 12rem">
-                                                        <img src="{{ isset($setting->site_logo) ? asset('storage/'.$setting->site_logo) : asset('not-image-available.png')}}" alt="Site Logo" id="imagePreview"  onclick="triggerFileUpload()" style="width: 100%; aspect-ratio: 9 / 9; object-fit: cover;">
-                                                        <input type="file" name="site_logo" id="imageUpload" accept="image/*" style="display: none;" onchange="previewImage(event)">
-                                                        @error('site_logo')
-                                                            <div class="errors">
-                                                                <span class="text-danger">
-                                                                    {{$message}}
-                                                                </span>
-                                                            </div>
-                                                        @enderror
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Permission</h4>
+                                        </div>
+                                        <div class="card-body" style="max-height: 300px; overflow-y:auto">
+                                            @error('permission_ids')
+                                                <div class="errors">
+                                                    <span class="text-danger">
+                                                        {{$message}}
+                                                    </span>
+                                                </div>
+                                            @enderror
+                                            <div class="row">
+                                                @foreach ($permissions as $permission)
+                                                    <div class="col-sm-3 mt-2">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input border-dark" name="permissions[]" id="permission_{{ $permission->id }}" type="checkbox" value="{{ $permission->name }}">
+                                                            <label class="text-muted text-capitalize">{{ str_replace('_', ' ', $permission->name) }}</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-        
-                                                <div class="col-md-8">
-                                                    <label for="site_description">Site Description</label>
-                                                    <textarea id="site_description" name="site_description" class="form-control p-2 mt-3" rows="7" placeholder="Site Description">{{ old('site_description', $setting->site_description ?? '') }}</textarea>
-                                                    @error('site_description')
-                                                        <div class="errors">
-                                                            <span class="text-danger">
-                                                                {{$message}}
-                                                            </span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
-                
-                                                <div class="col-md-8">
-                                                    <label for="site_name">Site Name</label>
-                                                    <input type="text" id="site_name" name="site_name" class="form-control p-2 mt-3" value="{{ old('site_name', $setting->site_name ?? '') }}" placeholder="Site Name"> 
-                                                    @error('site_name')
-                                                        <div class="errors">
-                                                            <span class="text-danger">
-                                                                {{$message}}
-                                                            </span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
-    
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!-- Social Media setting -->
-                                <div class="card px-0 rounded-0">
-                                    <div class="card-header rounded-0 text-white p-0 px-2" style="background-color:rgb(12 34 56 / 78%)" data-bs-toggle="collapse" href="#socialmedia" role="button" aria-expanded="false" aria-controls="socialmedia">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h4 class="fs-6 rounded mb-0">Social Media</h4>
-                                            <span class="fa-sloid fa-plus fs-3"></span>
-                                        </div>
-                                    </div>
-                                    <div class="collapse" id="socialmedia">
-                                        <div class="card-body ">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label for="social_media_facebook_url">Facebook url</label>
-                                                    <input type="text" id="social_media_facebook_url" name="social_media_facebook_url" class="form-control p-2 mt-3" value="{{ old('social_media_facebook_url', $setting->social_media_facebook_url ?? '') }}" placeholder="Facebook url">
-                                                    @error('social_media_facebook_url')
-                                                        <div class="errors">
-                                                            <span class="text-danger">
-                                                                {{$message}}
-                                                            </span>
-                                                        </div>
-                                                    @enderror
-                                               </div>
-                
-                                               <div class="col-md-6">
-                                                   <div class="col-12">
-                                                       <label for="social_media_instagram_url">Instagram url</label>
-                                                       <input type="text" id="social_media_instagram_url" name="social_media_instagram_url" class="form-control p-2 mt-3" value="{{ old('social_media_instagram_url', $setting->social_media_instagram_url ?? '') }}" placeholder="Instagram url">
-                                                       @error('social_media_instagram_url')
-                                                           <div class="errors">
-                                                               <span class="text-danger">
-                                                                   {{$message}}
-                                                               </span>
-                                                           </div>
-                                                       @enderror
-                                                   </div>
-                                                </div>
-                
-                                                <div class="col-md-6">
-                                                    <div class="col-12">
-                                                        <label for="social_media_twitter_url">Twitter url</label>
-                                                        <input type="text" id="social_media_twitter_url" name="social_media_twitter_url" class="form-control p-2 mt-3" value="{{ old('social_media_twitter_url', $setting->social_media_twitter_url ?? '') }}" placeholder="Twitter url">
-                                                        @error('social_media_twitter_url')
-                                                            <div class="errors">
-                                                                <span class="text-danger">
-                                                                    {{$message}}
-                                                                </span>
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </form>
                     </div>

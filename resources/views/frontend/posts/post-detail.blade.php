@@ -64,10 +64,10 @@
 
 @section('content')
 
-    <div class="container detail-page mt-3">
+    <div class="container detail-page my-3">
         <div class="row g-4">
 
-            <div class="col-md-8">
+            <div class="col-md-8 rounded animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
                 @if (isset($post->featured_image))
                     <img src="{{ asset('storage').'/'. $post->featured_image }}" alt="{{ $post->title }}" class="card-detail-img">
                 @endif
@@ -80,7 +80,7 @@
             </div>
 
             <!-- right-Sidebar Section -->
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 animate__animated animate__fadeInDown" style="animation-delay: 0.2s;">
                 <div class="right-sidebar">
                     <h5>Related Articles</h5>
                     <ul class="list-unstyled">

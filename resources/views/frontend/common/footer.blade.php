@@ -12,9 +12,9 @@
             <div class="col-md-4 mb-4">
                 <h5>Follow Us</h5>
                 <div class="social-icons">
-                    <a href="{{ app('settings')['social_media_facebook_url'] }}" class="fab fa-facebook"></a>
-                    <a href="{{ app('settings')['social_media_instagram_url'] }}" class="fab fa-instagram"></a>
-                    <a href="{{ app('settings')['social_media_twitter_url'] }}" class="fab fa-twitter"></a>
+                    <a href="{{ app('settings')['social_media_facebook_url'] }}" class="lni lni-facebook"></a>
+                    <a href="{{ app('settings')['social_media_instagram_url'] }}" class="lni lni-instagram"></a>
+                    <a href="{{ app('settings')['social_media_twitter_url'] }}" class="lni lni-x"></a>
                 </div>
             </div>
 

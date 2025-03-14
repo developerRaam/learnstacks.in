@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('status')->nullable(false);
             $table->text('custom')->nullable();
             $table->string('username')->unique();
+            $table->string('google_id', 100)->nullable();
             $table->timestamps();
         });
 

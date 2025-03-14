@@ -16,7 +16,7 @@ class FrontendLoginMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role == 'User') {
+        if (Auth::check() && Auth::user()->role == 'user') {
             return $next($request);
         }
         return redirect()->route('frontend.login');

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('description')->nullable();
             $table->string('image')->nullable();
-            $table->integer('sort_by')->default(0);
+            $table->integer('sort_by')->nullable();
             $table->boolean('status')->default(1);
             $table->text('keywords')->nullable();
             $table->string('robots')->nullable();

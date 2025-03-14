@@ -2,64 +2,65 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function viewPermission(){
+
+        $user = Auth::user();
+        if (!$user->can('view_permission')) {
+            return back()->withError('You don\'t have permission to access this.');
+        }
+
+        $data['heading_title'] = "Permission";
+        $data['list_title'] = "Permission";
+
+        $data['breadcrumbs'][] = [
+            'text' => 'Home',
+            'href' => route('admin.dashboard'),
+        ];
+        $data['breadcrumbs'][] = [
+            'text' => 'Permissions',
+            'href' => null
+        ];
+
+        $data['action'] = route('admin.givePermission');
+
+        $data['users'] = User::where('role', 'admin')->select('id', 'name', 'email')->get();
+
+        $data['permissions'] = Permission::all();
+
+        return view('admin.setting.permission', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function givePermission(Request $request){
+
+        $request->validate([
+            "user_id" => 'required',
+            "permissions" => 'required|array'
+        ]);
+        
+        $user = User::findOrFail($request->user_id);
+
+        // Get valid permissions from the database
+        $validPermissions = Permission::whereIn('name', $request->permissions)->pluck('name')->toArray();
+
+        // Sync user permissions (add new, remove missing)
+        $user->syncPermissions($validPermissions);
+
+        return back()->withSuccess('Permission Changed Successfully');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function getPermission($user_id = null){
+        $user = User::where('id', $user_id)->first();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json([
+            'data' => $user->getAllPermissions()
+        ]);
     }
 }

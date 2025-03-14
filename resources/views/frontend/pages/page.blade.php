@@ -20,7 +20,7 @@
 
 @section('content')
 
-    <div class="container detail-page mt-3">
+    <div class="container detail-page my-3">
         <div class="row g-4">
 
             <div class="col-md-12">
