@@ -83,9 +83,16 @@ class BannerController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'nullable',
             'status' => 'nullable',
             'image' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+            'description' => 'nullable',
+            'button_text' => 'nullable',
+            'button_url' => 'nullable',
+            'sort_by' => 'nullable',
+            'button_background' => 'nullable',
+            'button_color' => 'nullable',
+            'border_color' => 'nullable',
         ]);
 
         $validated['status'] = $validated['status'] ? true : false;
@@ -156,9 +163,16 @@ class BannerController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'nullable',
             'status' => 'nullable',
             'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'description' => 'nullable',
+            'button_text' => 'nullable',
+            'button_url' => 'nullable',
+            'sort_by' => 'nullable',
+            'button_background' => 'nullable',
+            'button_color' => 'nullable',
+            'border_color' => 'nullable',
         ]);
 
         $validated['status'] = $validated['status'] ? true : false; 

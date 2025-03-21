@@ -2,6 +2,8 @@
 @media (max-width: 576px) {
     .d-phone{ display: block; }
     .d-desktop{ display: none; }
+    .banner_heading{font-size: 1rem !important;}
+    .banner_description{font-size: 0.8rem !important;}
 }
 
 /* Small Devices (Tablets, 7-inch screens) */
@@ -9,6 +11,8 @@
     .d-phone{ display: none; }
     .d-tab{ display: block; }
     .d-desktop{ display: none; }
+    .banner_heading{font-size: 1.5rem !important;}
+    .banner_description{font-size: 1rem !important;}
 }
 
 /* Medium Devices (Tablets, iPads, 10-inch screens) */

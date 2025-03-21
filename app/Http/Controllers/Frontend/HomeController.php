@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function home(){
         $data['posts'] = Post::where('status', 'Published')->latest('created_at')->limit(10)->get();
-        $data['banners'] = Banner::where('status', 1)->get();
+        $data['banners'] = Banner::where('status', 1)->orderBy('sort_by', 'asc')->get();
 
         return view('frontend.home', $data);
     }

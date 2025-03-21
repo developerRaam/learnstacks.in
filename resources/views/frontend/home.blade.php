@@ -21,10 +21,10 @@
 
     @include('frontend.common.carousel')
 
-    <div class="container my-4">
+    <div class="container-fluid my-4">
         <div class="row g-4 justify-content-start">
             @foreach ($posts as $post)
-                <div class="col-md-6 col-lg-4 col-xl-4">
+                <div class="col-md-6 col-lg-4 col-xl-3">
                     <div class="card custom-card h-100 animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->index * 0.2 }}s;">
                         @if (isset($post->featured_image))
                             <img src="{{ asset('storage/cache/posts') .'/'. pathinfo($post->featured_image, PATHINFO_FILENAME) . '_600.jpg' }}" class="card-img-top" alt="{{ $post->title }}">

@@ -14,11 +14,11 @@
             <div class="col-6 col-md-9 ">
                 <div class="d-desktop d-phone">
                     <ul class="list-unstyled text-white d-flex justify-content-end align-items-center mb-0">
-                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="/">Home</a></li>
+                        <li class="px-3 fs-6 navbar_items"><a class="text-decoration-none text-grey" href="/">Home</a></li>
                         @foreach ($categories as $category)
-                            <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.post', $category->slug) }}">{{ $category->name }}</a></li>
+                            <li class="px-3 fs-6 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.post', $category->slug) }}">{{ $category->name }}</a></li>
                         @endforeach
-                        <li class="px-3 fs-5 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
+                        <li class="px-3 fs-6 navbar_items"><a class="text-decoration-none text-grey" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
                         <li class="px-3 fs-5 navbar_items">
                             @if (Auth::check() && Auth::user()->role === 'user')
                                 <div class="dropdown text-end">

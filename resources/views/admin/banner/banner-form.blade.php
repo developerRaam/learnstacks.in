@@ -134,7 +134,84 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>                              
+                                </div>     
+                                
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="description">Description</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" name="description" class="form-control" placeholder="description" value="{{ old('description', $banner->description ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="button_text">Button Text</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" name="button_text" class="form-control" placeholder="Button text" value="{{ old('button_text', $banner->button_text ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="button_url">Button URL</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" name="button_url" class="form-control" placeholder="Button url" value="{{ old('button_url', $banner->button_url ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="button_background">Button Background color</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="color" name="button_background" class="form-control" value="{{ old('button_background', $banner->button_background ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="button_color">Button Text Color</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="color" name="button_color" class="form-control" value="{{ old('button_color', $banner->button_color ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="border_color">Button Border Color</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="color" name="border_color" class="form-control" value="{{ old('border_color', $banner->border_color ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="row mb-4">
+                                        <div class="col-2 text-end">
+                                            <label for="sort_by">Sort by</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="number" name="sort_by" class="form-control" placeholder="Sort by" value="{{ old('sort_by', $banner->sort_by ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div> 
 
                             </div>
                         </form>

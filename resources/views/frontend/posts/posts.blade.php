@@ -20,7 +20,7 @@
 
 @section('content')
 
-    <div class="container my-2">
+    <div class="container-fluid my-2">
 
         <div class="w-100 py-5 category_image mb-2 rounded animate__animated animate__fadeInDown" style="animation-delay: 0.2s;">
             <div class="position-absolute w-100 d-flex align-items-center justify-content-center h-100 rounded" style="z-index: 100;width: 100%;top:0;background-color:#000000ab"></div>
@@ -29,7 +29,7 @@
 
         <div class="row g-4 justify-content-start">
             @forelse ($posts as $post)
-                <div class="col-md-6 col-lg-4 col-xl-4">
+                <div class="col-md-6 col-lg-4 col-xl-3">
                     <div class="card custom-card h-100 animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->index * 0.2 }}s;">
                         @if (isset($post->featured_image))
                             <img src="{{ asset('storage/cache/posts') .'/'. pathinfo($post->featured_image, PATHINFO_FILENAME) . '_600.jpg' }}" class="card-img-top" alt="{{ $post->title }}">
