@@ -99,8 +99,6 @@
 
         <div class="login-form-container active" id="loginForm">
             <h2 class="login_heading">Login</h2>
-            <!-- alert message -->
-            @include('admin.common.alert')
             <form action="{{ $action }}" method="post">
                 @csrf
                 <input type="email" class="login-input" name="email" id="email" placeholder="Email" required>

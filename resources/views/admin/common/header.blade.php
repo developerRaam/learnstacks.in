@@ -23,4 +23,7 @@
             </div>
         </div>
     </div>
-</header>   
+</header>
+
+<!-- Alert Message -->
+@include('admin.common.alert')

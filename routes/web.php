@@ -24,26 +24,28 @@ use App\Http\Controllers\Frontend\PageController as FrontendPageController;
 use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 use App\Http\Controllers\Frontend\Users\DashboardController as UsersDashboardController; 
 
-Route::get('/admin', function () {
-    return redirect()->route('admin.login');
+// tool routes
+require_once __DIR__ . '/tool.php';
+
+Route::get('admin', function () {
+    return "kkk";
+    return redirect('/admin/login');
 });
 
-Route::name('admin.')->group(function () {
+Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::middleware('LogoutMiddleware')->group(function (){
-        Route::prefix('admin/')->group(function (){
-            Route::get('login', [AuthController::class, 'index'])->name('login');
-            Route::post('login', [AuthController::class, 'login']);
-            Route::get('forgot-password', [AuthController::class, 'showForgotPassword'])->name('forgot-password');
-            Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
-            Route::get('change-password', [AuthController::class, 'showChangePassword'])->name('change-password');
-            Route::post('change-password', [AuthController::class, 'changePassword']);
-            Route::get('verify-otp', [AuthController::class, 'showVerifyOtp'])->name('verify-otp');
-            Route::post('verify-otp', [AuthController::class, 'verifyOtp']);
-        });
+        Route::get('login', [AuthController::class, 'index'])->name('login');
+        Route::post('login', [AuthController::class, 'login']);
+        Route::get('forgot-password', [AuthController::class, 'showForgotPassword'])->name('forgot-password');
+        Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
+        Route::get('change-password', [AuthController::class, 'showChangePassword'])->name('change-password');
+        Route::post('change-password', [AuthController::class, 'changePassword']);
+        Route::get('verify-otp', [AuthController::class, 'showVerifyOtp'])->name('verify-otp');
+        Route::post('verify-otp', [AuthController::class, 'verifyOtp']);
     });
     
-    Route::middleware(['LoginMiddleware'])->prefix('admin/')->group(function () {
+    Route::middleware(['LoginMiddleware'])->group(function () {
         Route::get('logout', [AuthController::class, 'logout'])->name('logout');
         
         Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');

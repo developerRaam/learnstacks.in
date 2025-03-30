@@ -4,25 +4,26 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Attachment;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Email extends Mailable
+class SendEmail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $data;
 
     /**
      * Create a new message instance.
      */
-    public $emailData;
-    public $siteTitle;
-
-    public function __construct($emailData)
+    public function __construct($data)
     {
-        $this->emailData = $emailData;
-        $this->siteTitle = "Rewardo";
+        $this->data = $data;
     }
 
     /**
@@ -31,8 +32,8 @@ class Email extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->siteTitle .' '. $this->emailData['subject'] ?? '',
-            from: new Address(env('MAIL_FROM_ADDRESS'), $this->siteTitle)
+            subject: "Send Email",
+            from: new Address(env('MAIL_FROM_ADDRESS'))
         );
     }
 
@@ -40,12 +41,9 @@ class Email extends Mailable
      * Get the message content definition.
      */
     public function content(): Content
-    {       
+    {
         return new Content(
-            view: 'admin.common.email',
-            with: [
-                'emailData' => $this->emailData,
-            ]
+            view: 'mail.template',
         );
     }
 
@@ -56,6 +54,12 @@ class Email extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = [];
+
+        $attachments[] = Attachment::fromPath($this->data['pdf']);
+        if (!empty($this->data['pdf']) && file_exists($this->data['pdf'])) {
+        }
+
+        return $attachments;
     }
 }

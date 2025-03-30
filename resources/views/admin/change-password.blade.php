@@ -22,9 +22,6 @@
        <div class="card shadow">
             <div class="card-body">
                 <h4 class="text-center">Change Password</h4>
-                <!-- alert message -->
-                @include('admin.common.alert')
-
                 <form action="{{$action}}" method="POST">
                     @csrf
                     <!-- password Input -->

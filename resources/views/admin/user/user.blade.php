@@ -150,9 +150,6 @@
                         </form>
                     </div>
 
-                    <!-- Alert Message -->
-                    @include('admin.common.alert')
-
                     <div class="px-3 py-2 title-list">
                         <p class="mb-0"><i class="fa-solid fa-list"></i> {{ $list_title }}</p>
                     </div>

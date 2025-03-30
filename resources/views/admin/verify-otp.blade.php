@@ -23,9 +23,6 @@
             <div class="card-body">
                 <h4 class="text-center">Verify OTP</h4>
 
-                <!-- alert message -->
-                @include('admin.common.alert')
-
                 <form action="{{$action}}" method="POST">
                     @csrf
                     <div class="mb-4">

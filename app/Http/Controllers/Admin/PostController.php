@@ -134,7 +134,7 @@ class PostController extends Controller
                
         $validated['user_id'] = Auth::user()->id;
         
-        $validated['slug'] = Str::slug($validated['title']);
+        $validated['slug'] = Str::slug($validated['slug']);
         
         if($validated['status'] == 'Published'){
             $validated['published_at'] = Carbon::now();

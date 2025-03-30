@@ -30,8 +30,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $view->with('categories', Category::where('menu_top', 1)->where('status', 1)->get());
-            $view->with('subCategories', SubCategory::where('status', 1)->get());
+            $view->with('service_categories', Category::where('menu_top', 1)->where('status', 1)->get());
+            $view->with('service_subCategories', SubCategory::where('status', 1)->get());
             $view->with('service_note_categories', NoteCategory::select('id', 'name')->where('user_id', Auth::id())->get());
             $view->with('service_notes', Note::select('id', 'name', 'category_id')->where('user_id', Auth::id())->get());
         });

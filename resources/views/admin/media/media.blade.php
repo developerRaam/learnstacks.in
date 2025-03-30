@@ -39,11 +39,6 @@
                         </div>
                         <!-- Show all images  -->
                         <div class="col-sm-12">
-        
-                            <div class="mt-3">
-                                <!-- Alert Message -->
-                                @include('admin.common.alert')
-                            </div>
 
                             <div class="card mt-4 p-2">
                                 <div class="row" id="show_all_images">

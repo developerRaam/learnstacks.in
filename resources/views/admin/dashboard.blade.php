@@ -19,9 +19,6 @@
                     </div>
                 </div>
                 <div class="row g-3 px-4">
-                    
-                    <!-- alert message -->
-                    @include('admin.common.alert')
 
                     <div class="col-6 col-sm-6">
                         <div class="card dashboard dashboard-card1">
