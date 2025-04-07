@@ -28,7 +28,6 @@ use App\Http\Controllers\Frontend\Users\DashboardController as UsersDashboardCon
 require_once __DIR__ . '/tool.php';
 
 Route::get('admin', function () {
-    return "kkk";
     return redirect('/admin/login');
 });
 

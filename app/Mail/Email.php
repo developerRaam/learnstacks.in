@@ -4,26 +4,25 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Attachment;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class SendEmail extends Mailable
+class Email extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public $emailData;
+    public $siteTitle;
+
+    public function __construct($emailData)
     {
-        $this->data = $data;
+        $this->emailData = $emailData;
+        $this->siteTitle = "Rewardo";
     }
 
     /**
@@ -32,8 +31,8 @@ class SendEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Send Email",
-            from: new Address(env('MAIL_FROM_ADDRESS'))
+            subject: $this->siteTitle .' '. $this->emailData['subject'] ?? '',
+            from: new Address(env('MAIL_FROM_ADDRESS'), $this->siteTitle)
         );
     }
 
@@ -41,9 +40,12 @@ class SendEmail extends Mailable
      * Get the message content definition.
      */
     public function content(): Content
-    {
+    {       
         return new Content(
-            view: 'mail.template',
+            view: 'admin.common.email',
+            with: [
+                'emailData' => $this->emailData,
+            ]
         );
     }
 
@@ -54,12 +56,6 @@ class SendEmail extends Mailable
      */
     public function attachments(): array
     {
-        $attachments = [];
-
-        $attachments[] = Attachment::fromPath($this->data['pdf']);
-        if (!empty($this->data['pdf']) && file_exists($this->data['pdf'])) {
-        }
-
-        return $attachments;
+        return [];
     }
 }
