@@ -30,7 +30,7 @@ class NoteController extends Controller
 
         $data['action'] = route('frontend.note');
 
-        $data['notes'] = Note::with('noteCategory')->where('id', Auth::id())->paginate();
+        $data['notes'] = Note::with('noteCategory')->where('user_id', Auth::id())->paginate();
 
         return view('frontend.users.note-list', $data);
     }
@@ -98,6 +98,10 @@ class NoteController extends Controller
         $data['breadcrumbs'][] = [
             'text' => 'Note',
             'href' => route('frontend.note.show', $data['note']->id)
+        ];
+        $data['breadcrumbs'][] = [
+            'text' => $data['note']->name,
+            'href' => null
         ];
 
         return view('frontend.users.show-note', $data);

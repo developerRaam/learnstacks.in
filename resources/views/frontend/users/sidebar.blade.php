@@ -50,12 +50,16 @@
   <!-- Desktop Sidebar -->
   <ul class="list-none pl-0 hidden lg:block" id="desktopSidebar">
     <li class="mb-1">
-      <button class="w-full text-left py-2 px-3 rounded hover:bg-gray-100" onclick="toggleCollapse('default')">Default</button>
+      <button class="w-full flex text-left py-2 px-3 rounded hover:bg-gray-100" onclick="toggleCollapse('default')">
+        <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+        </svg> Default
+      </button>
       <div class="pl-3 hidden" id="collapse-default">
         <ul class="list-none text-sm pb-1">
           @foreach ($service_notes as $note)
             @if (!$note->category_id)
-              <li><a href="{{ route('frontend.note.show', $note->id) }}" class="block rounded py-1 hover:bg-gray-100"><i class="lni lni-check-circle-1 text-green-600 mr-1"></i> {{ $note->name }}</a></li>
+              <li><a href="{{ route('frontend.note.show', $note->id) }}" class="block rounded pl-4 py-1 hover:bg-gray-100"><i class="lni lni-check-circle-1 text-green-600 mr-1"></i> {{ $note->name }}</a></li>
             @endif
           @endforeach
         </ul>
@@ -64,8 +68,12 @@
 
     @foreach ($service_note_categories as $category)
       <li class="mb-1">
-        <div class="note-sidebar flex justify-between items-center relative group">
-          <button class="text-left w-full py-2 px-3 rounded hover:bg-gray-100" onclick="toggleCollapse('{{ $category->id }}')">{{ $category->name }}</button>
+        <div class="note-sidebar flex justify-between items-center relative group">         
+          <button class="flex text-left w-full py-2 px-3 rounded hover:bg-gray-100" onclick="toggleCollapse('{{ $category->id }}')">
+            <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+            </svg> {{ $category->name }}
+          </button>
           <div class="edit-button absolute right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <a class="text-black border px-1 py-0 text-sm rounded" href="{{ route('frontend.chapter.edit', $category->id) }}"><i class="lni lni-pencil-1 text-lg"></i></a>
           </div>
@@ -74,7 +82,7 @@
           <ul class="list-none text-sm pb-1">
             @foreach ($service_notes as $note)
               @if ($note->category_id == $category->id)
-                <li><a href="{{ route('frontend.note.show', $note->id) }}" class="block rounded py-1 hover:bg-gray-100"><i class="lni lni-check-circle-1 text-green-600 mr-1"></i> {{ $note->name }}</a></li>
+                <li><a href="{{ route('frontend.note.show', $note->id) }}" class="block rounded pl-4 py-1 hover:bg-gray-100"><i class="lni lni-check-circle-1 text-green-600 mr-1"></i> {{ $note->name }}</a></li>
               @endif
             @endforeach
           </ul>
