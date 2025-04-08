@@ -4,50 +4,59 @@
 
 @section('content')
 
-    <div class="container-fluid px-3 bg-white mb-0">
-        <div class="row">
-            <div class="col-md-3">
-                @include('frontend.users.sidebar')
-            </div>
-            <div class="col-md-9">
-                <div class="card py-2 mt-3 px-2 overflow-hidden">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <h2 class="fs-5 mb-0">{{$heading_title}}</h2>
-                            <div class="breadcrumbs">
-                                <ul class="ms-3">
-                                    @foreach ($breadcrumbs as $breadcrumb)
-                                        <li>
-                                            @if ($breadcrumb['href'])
-                                                <a href="{{$breadcrumb['href']}}">{{$breadcrumb['text']}}</a>
-                                            @else
-                                                <span class="text-muted">{{$breadcrumb['text']}}</span>
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
+<div class="w-full px-3 bg-white mb-0">
+    <div class="flex flex-col md:flex-row gap-4">
+        <div class="w-full md:w-1/4">
+            @include('frontend.users.sidebar')
+        </div>
+
+        <div class="w-full md:w-3/4">
+            <div class="bg-white rounded shadow py-2 mt-3 px-3 overflow-hidden">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <h2 class="text-lg font-semibold mb-0">{{ $heading_title }}</h2>
                         <div>
-                            <div class="d-flex justify-content-end align-items center gap-2">
-                                <a href="{{ route('frontend.note') . '/create' }}" class="btn btn-primary btn-sm px-1 d-flex align-items-center">
-                                    <i class="lni lni-plus fs-4"></i> Add Note &nbsp;
-                                </a>
-                                <a href="{{ route('frontend.chapter') . '/create' }}" class="btn btn-primary btn-sm px-1 d-flex align-items-center">
-                                    <i class="lni lni-plus fs-4"></i> Add Chapter &nbsp;
-                                </a>
-                            </div>
+                            <ul class="text-sm text-gray-600 ml-2" aria-label="Breadcrumb">
+                                <ol class="flex items-center space-x-1">
+                                  @foreach ($breadcrumbs as $index => $breadcrumb)
+                                    <li class="flex items-center">
+                                      @if ($breadcrumb['href'])
+                                        <a href="{{ $breadcrumb['href'] }}" class="text-blue-600 hover:underline">
+                                          {{ $breadcrumb['text'] }}
+                                        </a>
+                                      @else
+                                        <span class="text-gray-500">{{ $breadcrumb['text'] }}</span>
+                                      @endif
+                              
+                                      @if (!$loop->last)
+                                        <svg class="w-4 h-4 mx-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                          <path d="M7.05 4.05a.75.75 0 011.06 0L13 8.94a.75.75 0 010 1.06l-4.89 4.89a.75.75 0 11-1.06-1.06L11.44 10 7.05 5.61a.75.75 0 010-1.06z"/>
+                                        </svg>
+                                      @endif
+                                    </li>
+                                  @endforeach
+                                </ol>
+                            </ul>
                         </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{{ route('frontend.note') . '/create' }}" class="bg-blue-600 text-white text-sm px-3 py-1 rounded flex items-center hover:bg-blue-700">
+                            <i class="lni lni-plus text-lg mr-1"></i> Add Note
+                        </a>
+                        <a href="{{ route('frontend.chapter') . '/create' }}" class="bg-blue-600 text-white text-sm px-3 py-1 rounded flex items-center hover:bg-blue-700">
+                            <i class="lni lni-plus text-lg mr-1"></i> Add Chapter
+                        </a>
                     </div>
                 </div>
+            </div>
 
-                <div class="py-3">
-                    <div class="w-100 overflow-hidden">
-                        <img class="w-100" src="{{ asset('online-notes.jpg') }}" alt="Learn Stacks online notes">
-                    </div>
+            <div class="py-3">
+                <div class="w-full overflow-hidden rounded shadow">
+                    <img class="w-full h-auto" src="{{ asset('online-notes.jpg') }}" alt="Learn Stacks online notes">
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 @endsection

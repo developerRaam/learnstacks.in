@@ -47,10 +47,7 @@ class NoteController extends Controller
             'text' => 'Dashboard',
             'href' => route('frontend.dashboard'),
         ];
-        $data['breadcrumbs'][] = [
-            'text' => 'Add Note',
-            'href' => route('frontend.note'). '/create'
-        ];
+
         $data['breadcrumbs'][] = [
             'text' => 'Add Note',
             'href' => null
@@ -101,10 +98,6 @@ class NoteController extends Controller
         $data['breadcrumbs'][] = [
             'text' => 'Note',
             'href' => route('frontend.note.show', $data['note']->id)
-        ];
-        $data['breadcrumbs'][] = [
-            'text' => $data['note']->name,
-            'href' => null
         ];
 
         return view('frontend.users.show-note', $data);

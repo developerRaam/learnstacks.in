@@ -21,22 +21,23 @@
 
     @include('frontend.common.carousel')
 
-    <div class="container-fluid my-4">
-        <div class="row g-4 justify-content-start">
-            @foreach ($posts as $post)
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="card custom-card h-100 animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->index * 0.2 }}s;">
-                        @if (isset($post->featured_image))
-                            <img src="{{ asset('storage/cache/posts') .'/'. pathinfo($post->featured_image, PATHINFO_FILENAME) . '_600.jpg' }}" class="card-img-top" alt="{{ $post->title }}">
-                        @endif
-                        <div class="card-body">
-                            <p class="card-title fs-5 text-start">{{ $post->title }}</p>
-                            <p class="card-text text-start">{{ substr($post->short_description, 0, 100) }}...</p>
-                            <a href="{{ route('frontend.postShow', $post->slug) }}" class="btn btn-custom">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+    <div class="w-full px-4 my-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          @foreach ($posts as $post)
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300" style="animation-delay: {{ $loop->index * 0.2 }}s;">
+              @if (isset($post->featured_image))
+                <img src="{{ asset('storage/cache/posts') . '/' . pathinfo($post->featured_image, PATHINFO_FILENAME) . '_600.jpg' }}" alt="{{ $post->title }}" class="w-full h-48 object-cover">
+              @endif
+      
+              <div class="p-4">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $post->title }}</h3>
+                <p class="text-gray-600 text-sm mb-4 text-start">{{ \Illuminate\Support\Str::limit($post->short_description, 100) }}</p>
+                <a href="{{ route('frontend.postShow', $post->slug) }}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition">
+                  Learn More
+                </a>
+              </div>
+            </div>
+          @endforeach
         </div>
     </div>
 

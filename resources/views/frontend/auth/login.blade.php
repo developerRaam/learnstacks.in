@@ -9,31 +9,23 @@
     @include('frontend.common.alert')
 
     <!-- Social Media Login Card -->
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-lg border-0 mx-auto mt-5">
-                <div class="card-body text-center">
-                    <h5 class="card-title mb-4">Sign in with Google</h5>
-            
-                    <!-- Google Login -->
-                    <a href="{{ route('frontend.googlelogin') }}" class="btn w-100 mb-3" style="border: 1px solid #ddd; border-radius: 12px;">
-                        <img src="{{ asset('frontend/icon/signin-with-google.png') }}" alt="Google Sign-In" style="height: 32px; margin-right: 8px;">
-            
-                    </a>
-                    {{-- 
-                    <!-- Facebook Login -->
-                    <a href="" class="btn btn-primary w-100 mb-3" style="border-radius: 12px;">
-                        <i class="bi bi-facebook me-2"></i> Sign in with Facebook
-                    </a>
-            
-                    <!-- Twitter Login -->
-                    <a href="" class="btn btn-info text-white w-100" style="border-radius: 12px;">
-                        <i class="bi bi-twitter-x me-2"></i> Sign in with Twitter
-                    </a> --}}
-                </div>
+    <div class="flex justify-center mt-10">
+        <div class="w-full max-w-md">
+        <div class="bg-white shadow-lg rounded-xl p-6">
+            <div class="text-center">
+            <h5 class="text-xl font-semibold mb-4">Sign in with Google</h5>
+    
+            <!-- Google Login Button -->
+            <a href="{{ route('frontend.googlelogin') }}"
+                class="flex items-center justify-center w-full mb-3 py-2 border border-gray-300 rounded-xl hover:bg-gray-100 transition">
+                <img src="{{ asset('frontend/icon/signin-with-google.png') }}"alt="Google Sign-In"class="h-8 mr-2">
+                <span class="text-sm font-medium text-gray-700">Continue with Google</span>
+            </a>
             </div>
         </div>
+        </div>
     </div>
+  
 </section>
 
 @endsection

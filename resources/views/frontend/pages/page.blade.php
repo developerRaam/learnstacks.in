@@ -20,19 +20,18 @@
 
 @section('content')
 
-    <div class="container detail-page my-3">
-        <div class="row g-4">
-
-            <div class="col-md-12">
-                
-                <h2 class="card-title text-center mb-3">{{ $page->name }}</h2>
-
-                <div class="p-2" style="text-align: justify;">
-                    {!! $page->description !!}
-                </div>
+    <div class="max-w-5xl mx-auto px-4 my-6">
+        <div class="space-y-4">
+    
+        <div>
+            <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4">{{ $page->name }}</h2>
+    
+            <div class="prose max-w-none text-justify p-2">
+            {!! $page->description !!}
             </div>
-
         </div>
-    </div>
+    
+        </div>
+    </div>  
     
 @endsection

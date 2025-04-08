@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <!-- SEO Meta Tags -->
         <meta name="title" content="@stack('addTitle')">
         <meta name="description" content="@stack('addDescription')">
@@ -47,42 +49,11 @@
         @if(!empty(trim($__env->yieldPushContent('addArticleTag'))))
             <meta property="article:tag" content="@stack('addArticleTag')">
         @endif
-        
-
-        <!-- Structured Data for Blog Post (SEO Boost) -->
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                "headline": "@stack('addTitle')",
-                "description": "@stack('addDescription')",
-                "author": {
-                    "@type": "Person",
-                    "name": "Learn Stacks"
-                },
-                "datePublished": "@stack('addArticlePublishDate')",
-                "dateModified": "@stack('addArticlePublishDate')",
-                "mainEntityOfPage": {
-                    "@type": "WebPage",
-                    "@id": "@stack('addCanonical')"
-                },
-                "image": "@stack('addOgImage')",
-                "publisher": {
-                    "@type": "Organization",
-                    "name": "Learn Stacks",
-                    "logo": {
-                    "@type": "ImageObject",
-                    "url": "{{ asset('logo.jpg') }}"
-                    }
-                }
-            }
-        </script>
     
         <title>@stack('setTitle') | {{ app('settings')['site_name'] }}</title>
 
         <meta name="google-site-verification" content="j9OPEVywxg8w5HXlOCid6gOuVj3H-doTlGxLLdFbgLc" />
         
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -118,19 +89,11 @@
 
         @include('frontend.common.footer')
 
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
         <!-- Sweet alert -->
         <script src="{{ URL::asset('frontend/js/sweet-alert.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
         
         <!-- Add additional js link -->
         @stack('addScript')
-
-        <script>
-            // for tooltip
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-        </script>
     </body>
 </html>

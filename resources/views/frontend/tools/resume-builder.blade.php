@@ -12,49 +12,50 @@
 @endpush
 
 @section('content')
-    <div class="d-flex justify-content-center">
-        <div class="card bg-white shadow-sm rounded p-4 w-100 my-5" style="max-width: 900px;">
-            <h2 class="text-center text-primary mb-3">AI Resume Generator</h2>
-            
-            <form id="resumeForm">
-                <div class="mb-3">
-                    <label for="job_role" class="form-label fw-semibold">Enter Job Role:</label>
-                    <input type="text" id="job_role" name="job_role" class="form-control" required>
-                </div>
-    
-                <button type="submit" class="btn btn-primary w-100">Generate Resume</button>
-            </form>
-    
-            <div class="mt-4">
-                <h3 class="h5 fw-semibold">Generated Resume:</h3>
-                <div id="loading" class="d-none text-center text-primary">⏳ Generating...</div>
-                <pre id="resumeOutput" class="p-3 bg-light rounded border mt-2 text-dark"></pre>
+<div class="flex justify-center">
+    <div class="bg-white shadow-md rounded-xl p-6 w-full max-w-3xl my-8">
+        <h2 class="text-2xl text-indigo-600 font-semibold text-center mb-4">AI Resume Generator</h2>
+
+        <form id="resumeForm">
+            <div class="mb-4">
+                <label for="job_role" class="block text-sm font-medium text-gray-700 mb-1">Enter Job Role:</label>
+                <input type="text" id="job_role" name="job_role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
             </div>
+
+            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">Generate Resume</button>
+        </form>
+
+        <div class="mt-6">
+            <h3 class="text-lg font-medium text-gray-800">Generated Resume:</h3>
+            <div id="loading" class="hidden text-center text-indigo-600 mt-2">⏳ Generating...</div>
+            <pre id="resumeOutput" class="mt-3 bg-gray-50 border rounded-lg p-4 text-gray-800 whitespace-pre-wrap"></pre>
         </div>
-    
-        <script>
-            document.getElementById('resumeForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                let jobRole = document.getElementById('job_role').value;
-                let output = document.getElementById('resumeOutput');
-                let loading = document.getElementById('loading');
-                
-                output.innerText = "";
-                loading.classList.remove("d-none");
-    
-                axios.post('/tools/generate-resume', { job_role: jobRole })
-                    .then(response => {
-                        loading.classList.add("d-none");
-                        output.innerText = response.data.resume;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        loading.classList.add("d-none");
-                        output.innerText = "⚠️ Error generating resume.";
-                    });
-            });
-        </script>
     </div>
+
+    <script>
+        document.getElementById('resumeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let jobRole = document.getElementById('job_role').value;
+            let output = document.getElementById('resumeOutput');
+            let loading = document.getElementById('loading');
+
+            output.innerText = "";
+            loading.classList.remove("hidden");
+
+            axios.post('/tools/generate-resume', { job_role: jobRole })
+                .then(response => {
+                    loading.classList.add("hidden");
+                    output.innerText = response.data.resume;
+                })
+                .catch(error => {
+                    console.error(error);
+                    loading.classList.add("hidden");
+                    output.innerText = "⚠️ Error generating resume.";
+                });
+        });
+    </script>
+</div>
+
 @endsection
 
 @push('addScript')

@@ -8,64 +8,64 @@
 @push('addGooglebot'){{ 'index,follow' }}@endpush
 
 @section('content')
-    <div class="container-fluid my-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="p-4">
-                    <h3 class="mb-3 text-center">🔑 Password Generator</h3>
-                    <div class="mt-4 passwordOutput">
-                        <p id="text_copied" class="text-success"></p>
-                        <div class="input-group">
-                            <input type="text" id="passwordOutput" class="form-control passwordOutputText fw-bold" readonly>
-                            <button class="btn btn-outline-secondary" onclick="copyPassword()">Copy</button>
-                        </div>
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <div class="bg-white shadow-md rounded-xl p-6">
+            <h3 class="text-2xl font-semibold text-center mb-6">🔑 Password Generator</h3>
+
+            <div class="mb-6">
+                <p id="text_copied" class="text-green-600 text-sm"></p>
+                <div class="flex gap-2">
+                    <input type="text" id="passwordOutput" class="w-full px-4 py-2 border rounded-lg font-semibold text-gray-800 bg-gray-100" readonly>
+                    <button class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-medium" onclick="copyPassword()">Copy</button>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="text-lg font-medium mb-4">Customize your password</h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password Length: <span id="passwordLengthValue" class="font-semibold">8</span></label>
+                        <input type="range" id="passwordLength" class="w-full" value="8" min="4" max="32" oninput="generatePassword()">
                     </div>
-                    <div class="card p-3">
-                        <div class="row g-4">
-                            <h2>Customize your password</h2>
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Password Length: <span id="passwordLengthValue">8</span></label>
-                                    <input type="range" id="passwordLength" class="form-range" value="8" min="4" max="32" oninput="generatePassword()">
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-check">
-                                    <input type="radio" id="easyToSay" name="passwordType" class="form-check-input">
-                                    <label class="form-check-label">Easy to say</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" id="easyToRead" name="passwordType" class="form-check-input">
-                                    <label class="form-check-label">Easy to read</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" id="allCharacters" name="passwordType" class="form-check-input">
-                                    <label class="form-check-label">All Characters</label>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-check">
-                                    <input type="checkbox" id="uppercase" class="form-check-input" checked>
-                                    <label class="form-check-label">Uppercase</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" id="lowercase" class="form-check-input" checked>
-                                    <label class="form-check-label">Lowercase</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" id="numbers" class="form-check-input" checked>
-                                    <label class="form-check-label">Numbers</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" id="symbols" class="form-check-input">
-                                    <label class="form-check-label">Symbols</label>
-                                </div>
-                            </div>
-                            <div class="mt-4 text-center">
-                                <button class="btn btn-primary btn-custom" onclick="generatePassword()">Generate Password</button>
-                            </div>
-                        </div>
+
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2">
+                            <input type="radio" id="easyToSay" name="passwordType" class="accent-indigo-500">
+                            Easy to say
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" id="easyToRead" name="passwordType" class="accent-indigo-500">
+                            Easy to read
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" id="allCharacters" name="passwordType" class="accent-indigo-500">
+                            All Characters
+                        </label>
                     </div>
+
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="uppercase" class="accent-indigo-500" checked>
+                            Uppercase
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="lowercase" class="accent-indigo-500" checked>
+                            Lowercase
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="numbers" class="accent-indigo-500" checked>
+                            Numbers
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="symbols" class="accent-indigo-500">
+                            Symbols
+                        </label>
+                    </div>
+                </div>
+
+                <div class="text-center mt-6">
+                    <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition" onclick="generatePassword()">Generate Password</button>
                 </div>
             </div>
         </div>
