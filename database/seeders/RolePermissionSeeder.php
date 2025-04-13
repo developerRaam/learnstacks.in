@@ -101,8 +101,8 @@ class RolePermissionSeeder extends Seeder
         $admin = Role::findByName('superadmin');
         $admin->givePermissionTo(Permission::all());
 
-        $user = User::find(17);
-        $user->givePermissionTo(Permission::all());
+        // $user = User::find(17);
+        // $user->givePermissionTo(Permission::all());
 
         $this->command->info('Roles and Permissions Seeded Successfully!');
     }

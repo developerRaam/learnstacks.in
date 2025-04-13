@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Tools;
+namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class ResumeBuilderController extends Controller
     }
 
     public function index(){
-        return view('frontend.tools.resume-builder');
+        return view('tools.resume-builder');
     }
 
     public function resumeBuilder(Request $request)

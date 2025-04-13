@@ -4,13 +4,13 @@
         
         <!-- About Section -->
         <div>
-          <h5 class="text-xl font-semibold mb-3">About Us</h5>
+          <h5 class="text-xl font-semibold mb-3 text-slate-300">About Us</h5>
           <p class="text-gray-400 text-sm">{{ app('settings')['site_description'] }}</p>
         </div>
   
         <!-- Social Media Links -->
         <div>
-          <h5 class="text-xl font-semibold mb-3">Follow Us</h5>
+          <h5 class="text-xl font-semibold mb-3 text-slate-300">Follow Us</h5>
           <div class="flex space-x-4 text-xl">
             <a href="{{ app('settings')['social_media_facebook_url'] }}" class="text-gray-400 hover:text-white">
               <i class="lni lni-facebook"></i>
@@ -26,9 +26,8 @@
   
         <!-- Newsletter Subscription -->
         <div>
-          <h5 class="text-xl font-semibold mb-3">Subscribe to Our Newsletter</h5>
           <span id="message" class="text-sm text-green-400"></span>
-          <form class="flex flex-col sm:flex-row items-center gap-2 mt-3">
+          <form class="flex items-center gap-2 mt-3">
             <input type="email" id="email" placeholder="Enter your email" required
               class="w-full px-4 py-2 text-sm rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button type="button" id="subscribe"
@@ -37,7 +36,10 @@
             </button>
           </form>
         </div>
-  
+      </div>
+
+      <div class="mt-5 md:mt-0">
+        <p class="text-center text-slate-500">© {{ date('Y') }} LearnStacks. All Rights Reserved.</p>
       </div>
     </div>
   </footer>

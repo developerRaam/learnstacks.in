@@ -19,7 +19,8 @@
                         <li><a class="no-underline text-gray-300 hover:text-white text-sm" href="{{ route('frontend.post', $category->slug) }}">{{ $category->name }}</a></li>
                     @endforeach
                     <li><a class="no-underline text-gray-300 hover:text-white text-sm" href="{{ route('frontend.page', 'about-us') }}">About Us</a></li>
-                    <li class="relative group" id="userDropdownWrapper">
+                    <li><a class="no-underline text-gray-300 hover:text-white text-sm" href="{{ route('tools.tools') }}">Tools</a></li>
+                    <li class="relative group">
                         @if (Auth::check() && Auth::user()->role === 'user')
                             <!-- Trigger Button -->
                             <button id="userDropdownToggle" class="focus:outline-none">
@@ -142,6 +143,24 @@
     document.addEventListener('DOMContentLoaded', function () {
         const toggle = document.getElementById('userDropdownToggle');
         const menu = document.getElementById('userDropdownMenu');
+
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function () {
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggle = document.getElementById('toolsDropdownToggle');
+        const menu = document.getElementById('toolsDropdownMenu');
 
         toggle.addEventListener('click', function (e) {
             e.stopPropagation();
