@@ -17,4 +17,8 @@ Route::name('tools.')->prefix('tools')->group(function () {
     Route::match(['get', 'post'], '/jpg-to-png', [ImageController::class, 'convertJpgToPng'])->name('convertJpgToPng');
     Route::match(['get', 'post'], '/png-to-jpg', [ImageController::class, 'convertPngToJpg'])->name('convertPngToJpg');
     Route::match(['get', 'post'], '/image-to-pdf', [ImageController::class, 'convertImageToPdf'])->name('convertImageToPdf');
+    Route::match(['get', 'post'], '/webp-to-jpg', [ImageController::class, 'convertWebpToJpg'])->name('convertWebpToJpg');
+    Route::match(['get', 'post'], '/remove-background', [ImageController::class, 'removeBackground'])->name('removeBackground');
+    Route::match(['get', 'post'], '/image-resize', [ImageController::class, 'imageResize'])->name('imageResize');
 });
+

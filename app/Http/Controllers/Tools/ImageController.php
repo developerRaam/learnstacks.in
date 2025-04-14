@@ -13,6 +13,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ImageController extends Controller
 {
+    protected $ImageManager;
+
+    public function __construct()
+    {
+        $this->ImageManager = new ImageManager(new Driver());
+    }
+
     public function imageCompress(Request $request)
     {
         if ($request->isMethod('get')) {
@@ -29,9 +36,7 @@ class ImageController extends Controller
         // Get uploaded file
         $imageFile = $request->file('image');
 
-        // Initialize image manager (using GD driver)
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($imageFile->getPathname());
+        $image = $this->ImageManager->read($imageFile->getPathname());
         
         $compressedName = 'compressed_' . time() . '.jpg';
         $finalPath = 'tools/compressedImage/' . $compressedName;
@@ -65,12 +70,10 @@ class ImageController extends Controller
         // Get uploaded file
         $imageFile = $request->file('image');
 
-        // Initialize image manager (using GD driver)
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($imageFile->getPathname());
+        $image = $this->ImageManager->read($imageFile->getPathname());
         
-        $compressedName = time() . '.png';
-        $finalPath = 'tools/convertImage/' . $compressedName;
+        $fineName = time() . '.png';
+        $finalPath = 'tools/convertImage/' . $fineName;
         
         Storage::disk('public')->put($finalPath, $image->toPng());
 
@@ -96,12 +99,10 @@ class ImageController extends Controller
         // Get uploaded file
         $imageFile = $request->file('image');
 
-        // Initialize image manager (using GD driver)
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($imageFile->getPathname());
+        $image = $this->ImageManager->read($imageFile->getPathname());
         
-        $compressedName = time() . '.jpg';
-        $finalPath = 'tools/convertImage/' . $compressedName;
+        $fineName = time() . '.jpg';
+        $finalPath = 'tools/convertImage/' . $fineName;
         
         Storage::disk('public')->put($finalPath, $image->toJpeg());
 
@@ -165,5 +166,98 @@ class ImageController extends Controller
             'path' => Storage::url($pdfPath),
         ]);
 
+    }
+
+    public function convertWebpToJpg(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('tools.image-webp-to-jpg');
+        }
+
+        // Handle POST method
+        $request->validate([
+            'image' => 'required|file|mimes:webp|max:5120'
+        ]);
+        
+        // Get uploaded file
+        $imageFile = $request->file('image');
+
+        $image = $this->ImageManager->read($imageFile->getPathname());
+        
+        $fineName = time() . '.jpg';
+        $finalPath = 'tools/convertImage/' . $fineName;
+        
+        Storage::disk('public')->put($finalPath, $image->toJpeg());
+
+        // Return JSON response
+        $response = [
+            'path' => Storage::url($finalPath)
+        ];
+
+        return back()->with($response);
+    }
+
+    public function removeBackground(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('tools.image-remove-background');
+        }
+
+        // Handle POST method
+        $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:5120'
+        ]);
+        
+        // Get uploaded file
+        $imageFile = $request->file('image');
+        $image = $this->ImageManager->read($imageFile->getPathname());
+        $fineName = time() . '.png';
+        $finalPath = 'tools/convertImage/' . $fineName;
+        
+        Storage::disk('public')->put($finalPath, $image->toJpeg());
+
+        // Return JSON response
+        $response = [
+            'path' => Storage::url($finalPath)
+        ];
+
+        return back()->with($response);
+    }
+
+    public function imageResize(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('tools.image-resize');
+        }
+
+        // Handle POST method
+        $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:5120',
+            'width' => 'required|numeric',
+            'height' => 'required|numeric'
+        ]);
+
+        $width = (int) $request->input('width');
+        $height = (int) $request->input('height');
+
+        // Get uploaded file
+        $imageFile = $request->file('image');
+        $image = $this->ImageManager->read($imageFile->getPathname());
+        $image->resize(width: $width, height: $height);
+        $fineName = 'resize_' .time() . '.jpg';
+        $finalPath = 'tools/resizeImage/' . $fineName;
+        
+        Storage::disk('public')->put($finalPath, $image->toJpeg());
+
+        // Get file size in KB
+        $fileSize = round(Storage::disk('public')->size($finalPath) / 1024, 2) . 'KB'; // in KB
+
+        // Return JSON response
+        return response()->json([
+            'success' => true,
+            'path' => Storage::url($finalPath),
+            'size' => $fileSize,
+            'message' => 'Image resized successfully'
+        ]);
     }
 }
