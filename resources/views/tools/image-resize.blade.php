@@ -1,7 +1,7 @@
 @extends('frontend.common.base')
-@push('setTitle') Image Resize and Crop @endpush
+@push('setTitle') Image Resize @endpush
 
-@push('addTitle'){{ 'Convert Image Resize and Crop' }}@endpush
+@push('addTitle'){{ 'Image Resize' }}@endpush
 @push('addDescription'){{ 'Compress images online without losing quality. Use our free Image Compressor to reduce JPG or PNG file size instantly. Fast, secure, and optimized for web.' }}@endpush
 @push('addKeywords'){{'image compressor, compress image online, jpg compressor, png compressor, reduce image size, compress image without losing quality, image optimization tool, free image compressor, online image size reducer, fast image compression'}}@endpush
 @push('addRobots'){{ 'index,follow' }}@endpush

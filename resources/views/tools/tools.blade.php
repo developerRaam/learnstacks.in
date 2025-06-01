@@ -12,9 +12,16 @@
         <div class="max-w-7xl mx-auto px-4 py-8">
             <div class="w-full px-4 my-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
+
                     <a href="{{ route('tools.imageCompress') }}">
                         <div class="max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl transition-shadow duration-300">
                             <h3 class="text-lg font-semibold text-gray-800">Image Compress</h3>
+                        </div>
+                    </a>
+
+                    <a href="{{ route('tools.imageResize') }}">
+                        <div class="max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                            <h3 class="text-lg font-semibold text-gray-800">Image Resize</h3>
                         </div>
                     </a>
     
@@ -32,7 +39,14 @@
 
                     <a href="{{ route('tools.convertImageToPdf') }}">
                         <div class="max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                            <h3 class="text-lg font-semibold text-gray-800">Convert Image to PDF</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">Convert JPG to PDF</h3>
+                        </div>
+                    </a>
+
+                    
+                    <a href="{{ route('tools.convertPdfToJpg') }}">
+                        <div class="max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                            <h3 class="text-lg font-semibold text-gray-800">Convert PDF to JPG</h3>
                         </div>
                     </a>
 
@@ -45,12 +59,6 @@
                     <a href="{{ route('tools.removeBackground') }}">
                         <div class="max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl transition-shadow duration-300">
                             <h3 class="text-lg font-semibold text-gray-800">Remove Image Background</h3>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('tools.imageResize') }}">
-                        <div class="max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                            <h3 class="text-lg font-semibold text-gray-800">Image Resize</h3>
                         </div>
                     </a>
     

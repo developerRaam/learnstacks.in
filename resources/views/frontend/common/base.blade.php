@@ -17,12 +17,24 @@
         <meta name="googlebot" content="@stack('addGooglebot')">
 
         <!-- Open Graph (OG) Meta Tags for Social Media -->
-        <meta property="og:title" content="@stack('addOgTitle')">
-        <meta property="og:description" content="@stack('addOgDescription')">
-        <meta property="og:image" content="@stack('addOgImage')">
-        <meta property="og:url" content="@stack('addOgUrl')">
-        <meta property="og:type" content="@stack('addOgType')">
-        <meta property="og:site_name" content="@stack('addOgSiteName')">
+        @if(!empty(trim($__env->yieldPushContent('addOgTitle'))))
+            <meta property="og:title" content="@stack('addOgTitle')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addOgDescription'))))
+            <meta property="og:description" content="@stack('addOgDescription')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addOgImage'))))
+            <meta property="og:image" content="@stack('addOgImage')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addOgUrl'))))
+            <meta property="og:url" content="@stack('addOgUrl')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addOgType'))))
+            <meta property="og:type" content="@stack('addOgType')">
+        @endif
+        @if(!empty(trim($__env->yieldPushContent('addOgSiteName'))))
+            <meta property="og:site_name" content="@stack('addOgSiteName')">
+        @endif
 
         <!-- Canonical Tag (Avoid Duplicate Content) -->
         <link rel="canonical" href="@stack('addCanonical')">

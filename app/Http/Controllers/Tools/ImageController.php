@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Tools;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class ImageController extends Controller
@@ -117,7 +118,7 @@ class ImageController extends Controller
     public function convertImageToPdf(Request $request)
     {
         if ($request->isMethod('get')) {
-            return view('tools.image-to-pdf');
+            return view('tools.image-jpg-to-pdf');
         }
     
         $request->validate([
@@ -207,21 +208,39 @@ class ImageController extends Controller
         $request->validate([
             'image' => 'required|image|mimes:png,jpg,jpeg|max:5120'
         ]);
-        
-        // Get uploaded file
+
         $imageFile = $request->file('image');
-        $image = $this->ImageManager->read($imageFile->getPathname());
-        $fineName = time() . '.png';
-        $finalPath = 'tools/convertImage/' . $fineName;
         
-        Storage::disk('public')->put($finalPath, $image->toJpeg());
+        $response = Http::timeout(30)->attach(
+            'file', // this must match the name used in FastAPI: `file`
+            fopen($imageFile->getPathname(), 'r'),
+            $imageFile->getClientOriginalName()
+        )->post('http://127.0.0.1:8000/remove-bg'); // your Python API URL
+
+        if ($response->failed()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong'
+            ]);
+        }
+
+        // Get image content (bytes)
+        $imageContent = $response->body();
+        $filename = 'bg-removed-' . Str::random(10) . '.png';
+        $path = 'tools/bgRemove/' . $filename;
+        
+        Storage::disk('public')->put($path, $imageContent);
+
+        // Get file size in KB
+        $fileSize = round(Storage::disk('public')->size($path) / 1024, 2) . 'KB'; // in KB
 
         // Return JSON response
-        $response = [
-            'path' => Storage::url($finalPath)
-        ];
-
-        return back()->with($response);
+        return response()->json([
+            'success' => true,
+            'path' => Storage::url($path),
+            'size' => $fileSize,
+            'message' => 'Background removed successfully'
+        ]);
     }
 
     public function imageResize(Request $request)

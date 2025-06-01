@@ -98,6 +98,12 @@
                             <i class="fa-solid fa-info-circle mr-2"></i> About Us
                         </a>
                     </li>
+                    <li>
+                        <a class="no-underline text-gray-800 hover:text-black flex items-center" href="{{ route('tools.tools') }}">
+                            <i class="fa-solid fa-info-circle mr-2"></i> Tools
+                        </a>
+                    </li>
+                    
                     @if (Auth::check())
                         <li>
                             <a class="no-underline text-gray-800 hover:text-black flex items-center" href="#">
@@ -129,13 +135,17 @@
         const menu = document.getElementById("mobileMenu");
         const close = document.getElementById("menuClose");
 
-        toggle.addEventListener("click", () => {
-            menu.classList.remove("translate-x-full");
-        });
+        if(toggle){
+            toggle.addEventListener("click", () => {
+                menu.classList.remove("translate-x-full");
+            });
+        }
 
-        close.addEventListener("click", () => {
-            menu.classList.add("translate-x-full");
-        });
+        if(close){
+            close.addEventListener("click", () => {
+                menu.classList.add("translate-x-full");
+            });
+        }
     });
 </script>
 

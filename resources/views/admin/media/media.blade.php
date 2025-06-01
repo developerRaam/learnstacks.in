@@ -4,6 +4,14 @@
     {{$heading_title}}
 @endpush
 
+@push('addStyle')
+    <style>
+        .card-img-top{
+            cursor: pointer;
+        }
+    </style>
+@endpush
+
 @section('content')
 <section class="container-fluid px-0">
     <div class="row">
@@ -84,6 +92,24 @@
                                     </div>
                                     <div class="row g-4" id="getAllproducts"></div>                                
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View image -->
+                    <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewImageModalLabel">Image Preview</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img id="viewModalImage" src="" alt="Preview" class="img-fluid mb-3">
+                                <p>
+                                <span id="imageUrl" class="text-primary" style="cursor:pointer; word-break:break-all;" title="Click to copy URL"></span>
+                                </p>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -174,15 +200,16 @@
                         let html = '';
                             html += '<div class="col-sm-4 col-md-3">';
                             html += '<div class="card p-2" style="min-height:150px;display: flex;justify-content: center;overflow:hidden">';
-                            html += '<a class="text-decoration-none" href="'+element.href+'">';
+                            // html += '<a class="text-decoration-none" href="'+element.href+'">';
                             html += '<img src="'+element.href+'" alt="'+element.text+'" class="card-img-top" style="height:150px;vertical-align: middle;">';
                             html += '<p class="mb-0 text-dark d-flex mt-2"><input class="me-2 form-check-input media_checkbox" type="checkbox" data-name="'+ element.text +'">'+ element.text +'</p>';
-                            html += '</a>';              
+                            // html += '</a>';              
                             html += '</div>';
                             html += '</div>';
                         getAllproducts.innerHTML += html;
                    });
                 }
+                viewImage();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error(textStatus, errorThrown); // Handle errors
@@ -203,7 +230,7 @@
                         let html = '';
                             html += '<div class="col-sm-3 col-md-2">';
                             html += '<div class="p-2" style="min-height:150px;display: flex;justify-content: center;overflow:hidden">';
-                            html += '<a class="text-decoration-none open_folder" target="blank" href="'+element.href+'" data-text="'+element.text+'"><i class="fa-solid fa-folder" style="font-size:8rem"></i>';
+                            // html += '<a class="text-decoration-none open_folder" target="blank" href="'+element.href+'" data-text="'+element.text+'"><i class="fa-solid fa-folder" style="font-size:8rem"></i>';
                             html += '<p class="mb-0 text-dark d-flex mt-2"><input class="me-2 form-check-input media_checkbox" type="checkbox" data-name="'+ element.text +'">'+ element.text +'</p>';
                             // html += '</a>';              
                             html += '</div>';
@@ -217,7 +244,7 @@
                         let html = '';
                             html += '<div class="col-sm-3 col-md-2">';
                             html += '<div class="card p-2" style="min-height:150px;display: flex;justify-content: center;overflow:hidden">';
-                            html += '<a class="text-decoration-none" href="'+element.href+'" target="blank">';
+                            // html += '<a class="text-decoration-none" href="'+element.href+'" target="blank">';
                             html += '<img src="'+element.href+'" alt="'+element.text+'" class="card-img-top" style="height:150px;vertical-align: middle;">';
                             html += '<p class="mb-0 text-dark d-flex mt-2" style=""><input class="me-2 form-check-input media_checkbox" type="checkbox" data-name="'+ element.text +'"></p>';
                             // html += '</a>';              
@@ -226,6 +253,7 @@
                         show_all_images.innerHTML += html;
                    });
                 }
+                viewImage();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error(textStatus, errorThrown); // Handle errors
@@ -330,5 +358,28 @@
             
         })
     })
+
+    // view image and copy url
+    function viewImage(){
+        const viewModalElement = document.getElementById('viewImageModal');
+        const modalImage = document.getElementById('viewModalImage');
+        const imageUrlText = document.getElementById('imageUrl');
+
+        const bsModal = new bootstrap.Modal(viewModalElement);
+
+        document.querySelectorAll('.card-img-top').forEach(image => {
+            image.addEventListener('click', () => {
+                const imageUrl = image.src;
+                modalImage.src = imageUrl;
+                imageUrlText.textContent = imageUrl;
+                bsModal.show();
+            });
+        });
+
+        imageUrlText.addEventListener('click', () => {
+            navigator.clipboard.writeText(imageUrlText.textContent)
+        });
+    }
+
 </script>
 @endpush
